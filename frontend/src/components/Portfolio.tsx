@@ -86,25 +86,25 @@ const Portfolio: React.FC = () => {
   const clientReviews = [
     {
       name: "FIGURING OUT BY JAY",
-      logo: "/figuring-out.png",
+      logo: "frontend\public\FIGURING OUT BY JAY (1).png",
       rating: 4,
       testimonial: "MeticSynergy's editing and content strategy amplified our reach with algorithm-optimized videos. Their creative approach helped us engage viewers and grow our channel faster."
     },
     {
       name: "RAVRANI DEVELOPERS",
-      logo: "/ravrani.png",
+      logo: "frontend\public\ravrani.png.jpg",
       rating: 5,
       testimonial: "MeticSynergy enhanced our digital presence with expert marketing strategies, making our projects more visible and attracting quality leads. Their approach significantly improved client engagement and brand credibility."
     },
     {
       name: "FUTBOL X DECATHLON",
-      logo: "/futbol.png",
+      logo: "frontend\public\futbol.png",
       rating: 5,
       testimonial: "Capturing high-intensity football action, MeticSynergy delivered professional photography for official tournaments. While Futbol Syndicate's events showcased our agility, Decathlon's collaboration demanded precision and specialized expertise, proving our adaptability in sports photography."
     },
     {
       name: "SPHOORTHY RESTAURANT",
-      logo: "/sphoorthy.png",
+      logo: "frontend\public\SPHOORTHY (1).jpg",
       rating: 5,
       testimonial: "MeticSynergy transformed our online presence with a sleek design and seamless user experience. Their intuitive approach boosted our reservations and strengthened customer engagement."
     }

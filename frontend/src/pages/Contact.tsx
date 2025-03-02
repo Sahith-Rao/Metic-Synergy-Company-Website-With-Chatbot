@@ -22,11 +22,19 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-r from-blue-800 to-purple-800 text-white">
-      <div className="container mx-auto px-4">
+    <section className="py-20 relative overflow-hidden bg-black" id="booking-section">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready to Transform Your Digital Presence?</h2>
-          <p className="text-xl max-w-2xl mx-auto mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            Ready to Transform Your Digital Presence?
+          </h2>
+          <p className="text-xl max-w-2xl mx-auto mb-10 text-gray-300">
             Schedule a consultation with our experts and discover how we can help your brand stand out in the digital landscape.
           </p>
         </div>
@@ -35,27 +43,31 @@ const Contact: React.FC = () => {
           {teamContacts.map((contact, index) => (
             <div 
               key={index}
-              className="bg-white/10 backdrop-blur-lg rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300"
+              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 transform hover:scale-105 group"
             >
-              <div className="flex items-center justify-center mb-4">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
-                  <User className="w-8 h-8" />
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/30">
+                  <User className="w-10 h-10 text-white" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-center mb-4">{contact.name}</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-center space-x-2">
-                  <Phone className="w-5 h-5 text-purple-400" />
-                  <a href={`tel:${contact.phone}`} className="hover:text-purple-400 transition-colors">
-                    {contact.phone}
-                  </a>
-                </div>
-                <div className="flex items-center justify-center space-x-2">
-                  <Mail className="w-5 h-5 text-purple-400" />
-                  <a href={`mailto:${contact.email}`} className="hover:text-purple-400 transition-colors">
-                    {contact.email}
-                  </a>
-                </div>
+              <h3 className="text-xl font-bold text-center mb-4 text-white group-hover:text-purple-400 transition-colors">
+                {contact.name}
+              </h3>
+              <div className="space-y-4">
+                <a 
+                  href={`tel:${contact.phone}`} 
+                  className="flex items-center justify-center space-x-3 text-gray-300 hover:text-purple-400 transition-colors"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>{contact.phone}</span>
+                </a>
+                <a 
+                  href={`mailto:${contact.email}`} 
+                  className="flex items-center justify-center space-x-3 text-gray-300 hover:text-purple-400 transition-colors"
+                >
+                  <Mail className="w-5 h-5" />
+                  <span>{contact.email}</span>
+                </a>
               </div>
             </div>
           ))}
@@ -63,6 +75,19 @@ const Contact: React.FC = () => {
 
         <div className="text-center">
           <BookAppointmentButton className="mx-auto" />
+        </div>
+
+        {/* Map or Additional Contact Info */}
+        <div className="mt-20 bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 max-w-4xl mx-auto">
+          <h3 className="text-2xl font-bold mb-6 text-white text-center">
+            Visit Our Office
+          </h3>
+          <div className="text-center text-gray-300">
+            <p className="mb-4">123 Digital Marketing Street</p>
+            <p className="mb-4">Hyderabad, Telangana 500081</p>
+            <p>India</p>
+          </div>
+          {/* You can add a map iframe here if needed */}
         </div>
       </div>
     </section>
