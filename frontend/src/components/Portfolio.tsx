@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Calendar } from 'lucide-react';
+import BookAppointmentButton from './BookAppointmentButton';
 
 const Portfolio: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [counts, setCounts] = useState({ years: 0, satisfaction: 0, traffic: 0 });
   const sectionRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
@@ -9,6 +12,7 @@ const Portfolio: React.FC = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          startCounting();
           observer.disconnect();
         }
       },
@@ -23,6 +27,28 @@ const Portfolio: React.FC = () => {
       observer.disconnect();
     };
   }, []);
+
+  const startCounting = () => {
+    const duration = 2000; // 2 seconds
+    const steps = 50;
+    const stepTime = duration / steps;
+
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      
+      setCounts({
+        years: Math.min(10, Math.floor((10 * currentStep) / steps)),
+        satisfaction: Math.min(100, Math.floor((100 * currentStep) / steps)),
+        traffic: Math.min(90, Math.floor((90 * currentStep) / steps))
+      });
+
+      if (currentStep >= steps) {
+        clearInterval(timer);
+      }
+    }, stepTime);
+  };
 
   const projects = [
     {
@@ -57,42 +83,103 @@ const Portfolio: React.FC = () => {
     }
   ];
 
+  const clientReviews = [
+    {
+      name: "FIGURING OUT BY JAY",
+      logo: "/figuring-out.png",
+      rating: 4,
+      testimonial: "MeticSynergy's editing and content strategy amplified our reach with algorithm-optimized videos. Their creative approach helped us engage viewers and grow our channel faster."
+    },
+    {
+      name: "RAVRANI DEVELOPERS",
+      logo: "/ravrani.png",
+      rating: 5,
+      testimonial: "MeticSynergy enhanced our digital presence with expert marketing strategies, making our projects more visible and attracting quality leads. Their approach significantly improved client engagement and brand credibility."
+    },
+    {
+      name: "FUTBOL X DECATHLON",
+      logo: "/futbol.png",
+      rating: 5,
+      testimonial: "Capturing high-intensity football action, MeticSynergy delivered professional photography for official tournaments. While Futbol Syndicate's events showcased our agility, Decathlon's collaboration demanded precision and specialized expertise, proving our adaptability in sports photography."
+    },
+    {
+      name: "SPHOORTHY RESTAURANT",
+      logo: "/sphoorthy.png",
+      rating: 5,
+      testimonial: "MeticSynergy transformed our online presence with a sleek design and seamless user experience. Their intuitive approach boosted our reservations and strengthened customer engagement."
+    }
+  ];
+
   return (
-    <section ref={sectionRef} id="portfolio" className="py-12 sm:py-16 md:py-20 bg-gray-900 text-white">
+    <section ref={sectionRef} id="portfolio" className="py-16 sm:py-20 md:py-24 bg-black text-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 sm:mb-16">
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 transform transition-all duration-500 hover:text-purple-400 ${isVisible ? 'slide-in-right' : 'opacity-0'}`}>
-            OUR PORTFOLIO
-          </h2>
-          <div className={`w-16 sm:w-20 h-1 bg-purple-600 mx-auto ${isVisible ? 'slide-in-bottom delay-100' : 'opacity-0'}`}></div>
-          <p className={`text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mt-4 sm:mt-6 px-2 ${isVisible ? 'slide-in-left delay-200' : 'opacity-0'}`}>
-            Explore our diverse range of projects that showcase our expertise in digital marketing, creative design, and brand development.
-          </p>
+        {/* Stats Section */}
+        <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-24 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
+          <div className="text-center">
+            <h3 className="text-5xl md:text-6xl font-bold text-purple-400 mb-2">
+              {counts.years}+
+            </h3>
+            <p className="text-gray-400 text-lg">Years of Experience</p>
+          </div>
+          <div className="text-center">
+            <h3 className="text-5xl md:text-6xl font-bold text-purple-400 mb-2">
+              {counts.satisfaction}%
+            </h3>
+            <p className="text-gray-400 text-lg">Client Satisfaction</p>
+          </div>
+          <div className="text-center">
+            <h3 className="text-5xl md:text-6xl font-bold text-purple-400 mb-2">
+              {counts.traffic}%
+            </h3>
+            <p className="text-gray-400 text-lg">Traffic Raised</p>
+          </div>
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {projects.map((project, index) => (
+
+        {/* Testimonials Section */}
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 ${isVisible ? 'slide-in-right' : 'opacity-0'}`}>
+          WHAT OUR CLIENTS SAY
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {clientReviews.map((review, index) => (
             <div 
-              key={index} 
-              className={`group relative overflow-hidden rounded-lg shadow-lg transform transition-all duration-500 hover:scale-105 ${isVisible ? `fade-in delay-${(index + 3) * 100}` : 'opacity-0'}`}
+              key={index}
+              className={`bg-gray-900/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-800 hover:border-purple-500 transition-all duration-500 transform hover:scale-105 ${
+                isVisible ? `fade-in delay-${(index + 1) * 200}` : 'opacity-0'
+              }`}
             >
-              <img 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-bold mb-1">{project.title}</h3>
-                <p className="text-purple-400 text-sm sm:text-base">{project.category}</p>
+              <div className="flex items-start gap-6 mb-6">
+                <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-white/10">
+                  <img 
+                    src={review.logo}
+                    alt={`${review.name} logo`}
+                    className="w-full h-full object-contain p-2"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2 text-purple-400">{review.name}</h3>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <span 
+                        key={i}
+                        className={`text-2xl ${i < review.rating ? 'text-yellow-400' : 'text-gray-600'}`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
+
+              <p className="text-gray-300 leading-relaxed text-lg">
+                "{review.testimonial}"
+              </p>
             </div>
           ))}
         </div>
-        
-        <div className={`text-center mt-8 sm:mt-12 ${isVisible ? 'slide-in-bottom delay-500' : 'opacity-0'}`}>
-          <button className="bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300 py-2 sm:py-3 px-6 sm:px-8 rounded-full text-base sm:text-lg font-bold transform transition-all duration-500 hover:scale-105">
-            View All Projects
-          </button>
+
+        <div className="text-center mt-16">
+          <BookAppointmentButton className="mx-auto" />
         </div>
       </div>
     </section>

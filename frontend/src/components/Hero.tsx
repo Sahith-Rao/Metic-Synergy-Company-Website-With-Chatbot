@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Instagram, Mail, MapPin, Calendar } from 'lucide-react';
+import BookAppointmentButton from './BookAppointmentButton';
 
 const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,10 +45,10 @@ const Hero: React.FC = () => {
         </div>
         
         <div className={`mt-6 sm:mt-10 transform transition-all duration-500 hover:scale-105 ${isVisible ? 'slide-in-bottom delay-500' : 'opacity-0'}`} id="book-online">
-          <button className="bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300 py-3 sm:py-4 px-6 sm:px-8 rounded-full text-base sm:text-lg font-bold flex items-center mx-auto">
+          <BookAppointmentButton className="bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300 py-3 sm:py-4 px-6 sm:px-8 rounded-full text-base sm:text-lg font-bold flex items-center mx-auto">
             <Calendar className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Book an Appointment
-          </button>
+          </BookAppointmentButton>
         </div>
         
         <div className={`mt-10 sm:mt-16 animate-bounce hidden sm:block ${isVisible ? 'fade-in delay-500' : 'opacity-0'}`}>

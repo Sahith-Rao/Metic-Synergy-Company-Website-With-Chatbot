@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const AboutUs: React.FC = () => {
+const About: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   
@@ -77,4 +77,4 @@ const AboutUs: React.FC = () => {
   );
 };
 
-export default AboutUs;
+export default About;
