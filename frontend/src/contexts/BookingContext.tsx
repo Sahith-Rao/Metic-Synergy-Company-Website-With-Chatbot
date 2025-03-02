@@ -5,21 +5,38 @@ interface BookingContextType {
   openModal: () => void;
   closeModal: () => void;
   handleBookingSubmit: (formData: BookingFormData) => void;
+  selectedService: string;
+  setSelectedService: (service: string) => void;
+  services: string[];
 }
 
 export interface BookingFormData {
   name: string;
   phone: string;
   date: string;
+  service: string;
 }
+
+const services = [
+  'Digital Marketing',
+  'Photography',
+  'Videography',
+  'Brand Development',
+  'Social Media Management',
+  'Content Creation'
+];
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string>('');
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedService('');
+  };
 
   const handleBookingSubmit = async (formData: BookingFormData) => {
     try {
@@ -39,7 +56,17 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   return (
-    <BookingContext.Provider value={{ isModalOpen, openModal, closeModal, handleBookingSubmit }}>
+    <BookingContext.Provider 
+      value={{ 
+        isModalOpen, 
+        openModal, 
+        closeModal, 
+        handleBookingSubmit, 
+        selectedService, 
+        setSelectedService,
+        services 
+      }}
+    >
       {children}
     </BookingContext.Provider>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hero from '../components/Hero';
 import { DollarSign, Megaphone, TrendingUp, Check } from 'lucide-react';
+import ClientMarquee from '../components/ClientMarquee';
 
 const Home: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -63,6 +64,8 @@ const Home: React.FC = () => {
   return (
     <div className="bg-black">
       <Hero />
+      
+      {/* How We Work Section */}
       <section ref={sectionRef} className="py-20 px-4">
         <div className="container mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
@@ -142,6 +145,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Innovative Solutions Section */}
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -190,6 +194,9 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Client Marquee at the bottom */}
+      <ClientMarquee />
     </div>
   );
 };

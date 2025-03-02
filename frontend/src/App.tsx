@@ -9,6 +9,12 @@ import Contact from './pages/Contact';
 import Book from './pages/Book';
 import { BookingProvider } from './contexts/BookingContext';
 import BookingModal from './components/BookingModal';
+import DigitalMarketing from './pages/services/DigitalMarketing';
+import Photography from './pages/services/Photography';
+import Videography from './pages/services/Videography';
+import BrandDevelopment from './pages/services/BrandDevelopment';
+import SocialMedia from './pages/services/SocialMedia';
+import ContentCreation from './pages/services/ContentCreation';
 
 function App() {
   return (
@@ -24,6 +30,12 @@ function App() {
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/book" element={<Book />} />
+              <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+              <Route path="/services/photography" element={<Photography />} />
+              <Route path="/services/videography" element={<Videography />} />
+              <Route path="/services/brand-development" element={<BrandDevelopment />} />
+              <Route path="/services/social-media" element={<SocialMedia />} />
+              <Route path="/services/content-creation" element={<ContentCreation />} />
             </Routes>
           </main>
           <Footer />

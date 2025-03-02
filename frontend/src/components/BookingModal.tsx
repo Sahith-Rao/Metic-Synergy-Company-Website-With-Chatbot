@@ -3,12 +3,13 @@ import { X, Calendar } from 'lucide-react';
 import { useBooking, BookingFormData } from '../contexts/BookingContext';
 
 const BookingModal: React.FC = () => {
-  const { isModalOpen, closeModal, handleBookingSubmit } = useBooking();
+  const { isModalOpen, closeModal, handleBookingSubmit, selectedService, services } = useBooking();
   const [formData, setFormData] = useState<BookingFormData>({
     name: '',
     phone: '',
     date: ''
   });
+  const [service, setService] = useState(selectedService || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,6 +78,25 @@ const BookingModal: React.FC = () => {
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white"
               min={new Date().toISOString().split('T')[0]}
             />
+          </div>
+
+          <div>
+            <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">
+              Select a Service
+            </label>
+            <select
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-700 focus:border-purple-500"
+              required
+            >
+              <option value="">Select a Service</option>
+              {services.map((service, index) => (
+                <option key={index} value={service}>
+                  {service}
+                </option>
+              ))}
+            </select>
           </div>
 
           <button
