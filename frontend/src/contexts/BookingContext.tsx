@@ -13,7 +13,9 @@ interface BookingContextType {
 export interface BookingFormData {
   name: string;
   phone: string;
+  email: string;
   date: string;
+  time: string;
   service: string;
 }
 
@@ -40,18 +42,13 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const handleBookingSubmit = async (formData: BookingFormData) => {
     try {
-      // Here you can add your API call to the backend
-      // Example:
-      // const response = await fetch('/api/bookings', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
-      
       console.log('Booking submitted:', formData);
+      // Here you would typically make an API call to your backend
+      alert('Booking submitted successfully!');
       closeModal();
     } catch (error) {
       console.error('Error submitting booking:', error);
+      alert('Error submitting booking. Please try again.');
     }
   };
 

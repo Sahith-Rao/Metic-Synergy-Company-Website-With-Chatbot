@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hero from '../components/Hero';
-import { DollarSign, Megaphone, TrendingUp, Check } from 'lucide-react';
+import { DollarSign, Megaphone, TrendingUp, Check, Rocket, Sparkles } from 'lucide-react';
 import ClientMarquee from '../components/ClientMarquee';
+import { motion } from 'framer-motion';
 
 const Home: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -66,11 +67,23 @@ const Home: React.FC = () => {
       <Hero />
       
       {/* How We Work Section */}
-      <section ref={sectionRef} className="py-20 px-4">
-        <div className="container mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+      <section ref={sectionRef} className="py-20 px-4 relative">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-purple-500/5 via-transparent to-blue-500/5 animate-gradient"></div>
+        </div>
+
+        <div className="container mx-auto relative z-10">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+          >
             HOW WE WORK
-          </h2>
+          </motion.h2>
           
           {/* Enhanced Progress Bar */}
           <div className="max-w-3xl mx-auto mb-12 relative">
@@ -147,18 +160,35 @@ const Home: React.FC = () => {
 
       {/* Innovative Solutions Section */}
       <section className="py-20 px-4 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-        
-        <div className="container mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+        {/* Enhanced background effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] animate-pulse delay-700"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-purple-500/5 via-transparent to-blue-500/5 animate-gradient"></div>
+        </div>
+
+        <div className="container mx-auto relative z-10">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+          >
             OUR INNOVATIVE SOLUTIONS
-          </h2>
-          
+          </motion.h2>
+
+          {/* Add glowing cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                <DollarSign className="w-8 h-8 text-purple-400" />
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
+                       hover:border-purple-500/50 transition-all duration-500 
+                       hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full 
+                           flex items-center justify-center mb-6 mx-auto group-hover:animate-pulse"
+              >
+                <Sparkles className="w-8 h-8 text-purple-400 group-hover:text-purple-300" />
               </div>
               <h3 className="text-xl font-bold text-white text-center mb-4">
                 Find Unique Selling Point
@@ -166,11 +196,18 @@ const Home: React.FC = () => {
               <p className="text-gray-300 text-center">
                 Help startups identify what makes them unique by understanding their competitors and target audience. Build a clear, standout brand message around that uniqueness.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                <Megaphone className="w-8 h-8 text-purple-400" />
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
+                       hover:border-purple-500/50 transition-all duration-500 
+                       hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full 
+                           flex items-center justify-center mb-6 mx-auto group-hover:animate-pulse"
+              >
+                <Sparkles className="w-8 h-8 text-purple-400 group-hover:text-purple-300" />
               </div>
               <h3 className="text-xl font-bold text-white text-center mb-4">
                 Brand Messaging Guidelines
@@ -178,11 +215,18 @@ const Home: React.FC = () => {
               <p className="text-gray-300 text-center">
                 Ensure all marketing materials share the same clear message by setting guidelines and sticking to them.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:scale-105">
-              <div className="w-16 h-16 bg-purple-600/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                <TrendingUp className="w-8 h-8 text-purple-400" />
+            <motion.div 
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
+                       hover:border-purple-500/50 transition-all duration-500 
+                       hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group"
+            >
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full 
+                           flex items-center justify-center mb-6 mx-auto group-hover:animate-pulse"
+              >
+                <Sparkles className="w-8 h-8 text-purple-400 group-hover:text-purple-300" />
               </div>
               <h3 className="text-xl font-bold text-white text-center mb-4">
                 Agile Marketing Approach
@@ -190,13 +234,41 @@ const Home: React.FC = () => {
               <p className="text-gray-300 text-center">
                 Stay agile by monitoring market trends, analyzing data, and being open to trying new strategies to keep marketing effective.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Client Marquee at the bottom */}
+      {/* Client Marquee */}
       <ClientMarquee />
+
+      {/* Add a glowing CTA section */}
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-black to-blue-900/20"></div>
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+              Ready to Transform Your Digital Presence?
+            </h2>
+            <p className="text-xl text-gray-300 mb-12">
+              Join the innovative brands that trust us with their digital success
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 
+                       rounded-full text-lg font-bold relative overflow-hidden group"
+            >
+              <span className="relative z-10 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 mr-2" />
+                Get Started Today
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 
+                           group-hover:opacity-100 transition-opacity duration-500"></div>
+            </motion.button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -25,8 +25,9 @@ const Header: React.FC = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-gray-800">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="text-white font-bold text-xl">
-            METIC-SYNERGY
+          <Link to="/" className="flex items-center space-x-3">
+            <img src="/logo.png" alt="Metic Synergy Logo" className="h-10 w-auto" />
+            <span className="text-white font-bold text-xl">METIC-SYNERGY</span>
           </Link>
 
           {/* Desktop Navigation */}
