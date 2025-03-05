@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import { DollarSign, Megaphone, TrendingUp, Check, Rocket, Sparkles } from 'lucide-react';
 import ClientMarquee from '../components/ClientMarquee';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -63,7 +64,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="bg-black">
+    <div className="bg-gray-900 text-white">
       <Hero />
       
       {/* How We Work Section */}
@@ -93,13 +94,9 @@ const Home: React.FC = () => {
                 <div 
                   key={index}
                   className={`w-4 h-4 rounded-full transition-all duration-500 absolute 
-                    ${index <= activeStep ? 'bg-purple-500' : 'bg-gray-700'}`}
+                    ${index <= activeStep ? 'bg-purple-500 animate-pulse' : 'bg-gray-700'}`}
                   style={{ left: `${(index * 100) / (steps.length - 1)}%`, transform: 'translateX(-50%)' }}
                 >
-                  {/* Pulse effect for active step */}
-                  {index === activeStep && (
-                    <span className="absolute w-full h-full rounded-full bg-purple-500 animate-ping opacity-75"></span>
-                  )}
                   {/* Step number tooltip */}
                   <span 
                     className={`absolute -top-8 left-1/2 -translate-x-1/2 text-sm font-medium
@@ -133,7 +130,7 @@ const Home: React.FC = () => {
               >
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 
                   ${index <= activeStep 
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-500 shadow-lg shadow-purple-500/30' 
+                    ? 'bg-gradient-to-r from-purple-600 to-purple-500 shadow-lg shadow-purple-500/30 animate-pulse' 
                     : 'bg-gray-700'
                   }`}
                 >
@@ -145,8 +142,8 @@ const Home: React.FC = () => {
                 </div>
                 <div className={`flex-1 p-6 rounded-xl transition-all duration-300 
                   ${index === activeStep 
-                    ? 'bg-gray-900/50 border border-purple-500/20 shadow-lg shadow-purple-500/10' 
-                    : ''
+                    ? 'bg-gray-800/50 border border-purple-500/20 shadow-lg shadow-purple-500/10' 
+                    : 'bg-gray-700'
                   }`}
                 >
                   <h3 className="text-xl font-bold text-purple-400 mb-2">{step.title}</h3>
@@ -181,7 +178,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <motion.div 
               whileHover={{ scale: 1.05, rotate: 2 }}
-              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
+              className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
                        hover:border-purple-500/50 transition-all duration-500 
                        hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group"
             >
@@ -200,7 +197,7 @@ const Home: React.FC = () => {
 
             <motion.div 
               whileHover={{ scale: 1.05, rotate: 2 }}
-              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
+              className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
                        hover:border-purple-500/50 transition-all duration-500 
                        hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group"
             >
@@ -219,7 +216,7 @@ const Home: React.FC = () => {
 
             <motion.div 
               whileHover={{ scale: 1.05, rotate: 2 }}
-              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
+              className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
                        hover:border-purple-500/50 transition-all duration-500 
                        hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] group"
             >
@@ -253,19 +250,21 @@ const Home: React.FC = () => {
             <p className="text-xl text-gray-300 mb-12">
               Join the innovative brands that trust us with their digital success
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 
-                       rounded-full text-lg font-bold relative overflow-hidden group"
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 mr-2" />
-                Get Started Today
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 
-                           group-hover:opacity-100 transition-opacity duration-500"></div>
+            <Link to="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 
+                         rounded-full text-lg font-bold relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Get Started Today
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 
+                             group-hover:opacity-100 transition-opacity duration-500"></div>
             </motion.button>
+          </Link>
           </div>
         </div>
       </section>
@@ -273,4 +272,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home; 
+export default Home;

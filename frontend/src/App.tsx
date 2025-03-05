@@ -15,6 +15,7 @@ import Videography from './pages/services/Videography';
 import BrandDevelopment from './pages/services/BrandDevelopment';
 import SocialMedia from './pages/services/SocialMedia';
 import ContentCreation from './pages/services/ContentCreation';
+import Survey from './pages/Survey';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="/services/brand-development" element={<BrandDevelopment />} />
               <Route path="/services/social-media" element={<SocialMedia />} />
               <Route path="/services/content-creation" element={<ContentCreation />} />
+              <Route path="/survey" element={<Survey />} />
             </Routes>
           </main>
           <Footer />

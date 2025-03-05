@@ -30,7 +30,7 @@ const ClientMarquee: React.FC = () => {
           {/* Marquee Container */}
           <div className="overflow-hidden relative">
             {/* First copy of logos */}
-            <div className="flex space-x-12 animate-scroll">
+            <div className="flex space-x-12 animate-marquee whitespace-nowrap">
               {clients.map((client, index) => (
                 <div
                   key={`first-${index}`}
@@ -74,4 +74,20 @@ const ClientMarquee: React.FC = () => {
   );
 };
 
-export default ClientMarquee; 
+// Add this to your tailwind.config.js content array
+//'./src/**/*.{js,jsx,ts,tsx}',
+
+// Add this inside the extend key in tailwind.config.js
+/*
+keyframes: {
+  marquee: {
+    '0%': { transform: 'translateX(0%)' },
+    '100%': { transform: 'translateX(-100%)' },
+  },
+},
+animation: {
+  marquee: 'marquee 20s linear infinite',
+},
+*/
+
+export default ClientMarquee;

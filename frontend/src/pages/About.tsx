@@ -57,14 +57,6 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6">Our Services</h3>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center text-gray-300">
-            {['Digital Marketing', 'Video Marketing', 'Content Marketing', 'Social Media Marketing', 'SEO Services', 'Email Marketing', 'Lead Generation', 'Ad Marketing'].map((service, index) => (
-              <li key={index} className={`bg-gray-800 p-4 rounded-lg transform transition-all duration-500 hover:scale-105 hover:bg-gray-700 ${isVisible ? 'fade-in delay-400' : 'opacity-0'}`}>{service}</li>
-            ))}
-          </ul>
-        </div>
 
         <div className="mt-12 sm:mt-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6">Our Accomplishments</h3>
@@ -72,9 +64,21 @@ const About: React.FC = () => {
             We have worked with renowned clients such as **Figuring Out By Jay**, **Decathlon**, **Futbol Syndicate**, **Hyderabad FC**, and **AIFF**. Our expertise spans industries including real estate, restaurants, and lifestyle branding.
           </p>
         </div>
+
+        {/* Profile Cards */}
+        <div className="mt-16">
+          <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6">Our Team</h3>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <ProfileCard name="Shiva Saketh" designation="Chief Technology Officer" />
+            <ProfileCard name="Meher Mani" designation="Chief Operations Officer" />
+            <ProfileCard name="Manuvardhan" designation="Chief Product Officer" />
+          </div>
+        </div>
       </div>
     </section>
   );
 };
+
+import ProfileCard from '../components/ProfileCard';
 
 export default About;
