@@ -8,6 +8,7 @@ interface BookingContextType {
   selectedService: string;
   setSelectedService: (service: string) => void;
   services: string[];
+  setIsOpen: (open: boolean) => void;
 }
 
 export interface BookingFormData {
@@ -57,11 +58,12 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
       value={{ 
         isModalOpen, 
         openModal, 
-        closeModal, 
-        handleBookingSubmit, 
-        selectedService, 
+        closeModal,
+        handleBookingSubmit,
+        selectedService,
         setSelectedService,
-        services 
+        services,
+        setIsOpen: setIsModalOpen
       }}
     >
       {children}
@@ -75,4 +77,4 @@ export const useBooking = () => {
     throw new Error('useBooking must be used within a BookingProvider');
   }
   return context;
-}; 
+};

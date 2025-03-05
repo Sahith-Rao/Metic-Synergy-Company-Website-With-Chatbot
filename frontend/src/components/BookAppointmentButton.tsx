@@ -28,7 +28,7 @@ const BookAppointmentButton: React.FC<BookAppointmentButtonProps> = ({ className
       >
         <span className="flex items-center justify-center">
           <Calendar className="w-5 h-5 mr-2" />
-          Book an Appointment
+          Book a Free Consultation
         </span>
         
         {/* Glow effect */}
@@ -58,4 +58,4 @@ const BookAppointmentButton: React.FC<BookAppointmentButtonProps> = ({ className
   );
 };
 
-export default BookAppointmentButton; 
+export default BookAppointmentButton;
