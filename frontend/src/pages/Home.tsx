@@ -4,6 +4,7 @@ import { DollarSign, Megaphone, TrendingUp, Check, Rocket, Sparkles } from 'luci
 import ClientMarquee from '../components/ClientMarquee';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { TypingAnimation } from '../registry/magicui/typing-animation';
 
 const Home: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
