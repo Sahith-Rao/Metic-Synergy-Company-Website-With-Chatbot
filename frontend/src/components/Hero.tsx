@@ -3,6 +3,7 @@ import { Instagram, Mail, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { TypingAnimation } from '../registry/magicui/typing-animation';
 import Button from './Button';
+import { FlickeringGrid } from './FlickeringGrid';
 
 const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,7 +11,11 @@ const Hero: React.FC = () => {
   
   useEffect(() => {
     // Set visible after component mounts to trigger animations
-    setIsVisible(true);
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const handleBooking = () => {
@@ -29,67 +34,69 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section
-      className="relative min-h-screen flex items-center justify-center text-white pt-16 pb-8 bg-gradient-to-br from-purple-900 to-blue-900 overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-md"></div>
-      <div
-        className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/10 via-transparent to-blue-500/10 animate-gradient"
-      ></div>
-
-      <div className="z-10">
-        <div className="container mx-auto px-4 text-center">
-          <h1
-            className={`text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 transform transition-all duration-700 hover:scale-105 text-center ${
-              isVisible ? "slide-in-right" : "opacity-0"
-            }`}
-            style={{ textShadow: "0 0 10px rgba(147, 51, 234, 0.8)" }}
-          >
-            <TypingAnimation className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+    <section className="relative min-h-screen flex items-center justify-center text-white pt-16 pb-8 bg-black overflow-hidden">
+      {/* Flickering grid background with black color */}
+      <FlickeringGrid 
+        color="#ffffff" 
+        className="absolute inset-0 z-0" 
+        maxOpacity={0.15}
+        flickerChance={0.1}
+      />
+      
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black/90 z-1"></div>
+      
+      <div className="z-10 max-w-4xl mx-auto px-4">
+        <div className="text-center mb-8">
+          <h1 className={`transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+            <TypingAnimation 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-serif"
+              duration={100}
+              delay={200}
+              startOnView={true}
+            >
               METIC-SYNERGY
             </TypingAnimation>
           </h1>
         </div>
-        <p
-          className={`text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed transform transition-all duration-500 hover:text-purple-300 px-2 ${
-            isVisible ? "slide-in-left delay-200" : "opacity-0"
-          }`}
-          style={{ textShadow: "0 0 8px rgba(147, 51, 234, 0.6)" }}
-        >
+        
+        <p className={`text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-200 transition-opacity duration-500 px-2 text-center ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}>
           "CRAFTING IMPACTFUL STORIES THROUGH DIGITAL MARKETING, PHOTOGRAPHY AND
           CREATIVE AD SOLUTIONS"
         </p>
 
-        <div
-          className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-8 mb-8 sm:mb-12 text-sm sm:text-base ${
-            isVisible ? "slide-in-bottom delay-400" : "opacity-0"
-          }`}
-        >
+        <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 mb-12 text-sm sm:text-base transition-opacity duration-500 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}>
           <a
             href="https://instagram.com/meticsynergy"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center hover:text-purple-400 transition-colors duration-300 hover:scale-105"
+            className="flex items-center text-gray-300 hover:text-white transition-colors duration-300"
           >
-            <Instagram className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+            <Instagram className="mr-2 h-5 w-5" />
             <span>meticsynergy-insta</span>
           </a>
           <a
             href="mailto:meticsynergy@gmail.com"
-            className="flex items-center hover:text-purple-400 transition-colors duration-300 hover:scale-105"
+            className="flex items-center text-gray-300 hover:text-white transition-colors duration-300"
           >
-            <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+            <Mail className="mr-2 h-5 w-5" />
             <span>meticsynergy@gmail.com</span>
           </a>
-          <div className="flex items-center hover:scale-105 transition-transform duration-300">
-            <MapPin className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+          <div className="flex items-center text-gray-300">
+            <MapPin className="mr-2 h-5 w-5" />
             <span>Hyderabad, India</span>
           </div>
         </div>
 
-        <div className="flex flex-row justify-center items-center mt-4">
-          <Button onClick={handleBooking} text="Get Started" color="blue" />
-          <Button onClick={handleSurvey} text="Take a Free Survey" color="green" />
+        <div className={`flex flex-row justify-center items-center gap-6 transition-opacity duration-500 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}>
+          <Button onClick={handleBooking} color="gray">Get Started</Button>
+          <Button onClick={handleSurvey} color="gray">Take a Free Survey</Button>
         </div>
       </div>
     </section>
