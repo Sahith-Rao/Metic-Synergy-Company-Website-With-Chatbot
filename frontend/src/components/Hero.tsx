@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TypingAnimation } from '../registry/magicui/typing-animation';
 import Button from './Button';
 import { FlickeringGrid } from './FlickeringGrid';
+import HomeForm from './HomeForm';
 
 const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -92,11 +93,15 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div className={`flex flex-row justify-center items-center gap-6 transition-opacity duration-500 ${
+        <div className={`flex flex-col md:flex-row justify-center items-center gap-6 transition-opacity duration-500 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}>
-          <Button onClick={handleBooking} color="gray">Get Started</Button>
-          <Button onClick={handleSurvey} color="gray">Take a Free Survey</Button>
+          <div className="w-full md:w-auto">
+            <HomeForm />
+          </div>
+          <div className="w-full md:w-auto mt-6 md:mt-0">
+            <Button onClick={handleSurvey} color="gray">Take a Free Survey</Button>
+          </div>
         </div>
       </div>
     </section>

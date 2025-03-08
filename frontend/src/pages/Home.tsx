@@ -262,12 +262,7 @@ const Home: React.FC = () => {
               <p className="text-xl text-gray-300 mb-12">
                 Join the innovative brands that trust us with their digital success
               </p>
-              <Link to="/contact">
-                <Button color="purple" onClick={() => { }}>
-                  Get Started Today
-                  <Sparkles className="w-5 h-5 mr-2" />
-                </Button>
-              </Link>
+              {/* Button removed as per requirements */}
             </div>
           </div>
         </section>

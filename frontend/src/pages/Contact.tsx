@@ -1,17 +1,26 @@
 'use client';
 
-'use client';
-
 import React, { useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
 import BookAppointmentButton from '../components/BookAppointmentButton';
+import { FlickeringGrid } from '../components/FlickeringGrid';
 
 export default function ContactPage() {
   const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 px-4 py-12 dark:from-gray-900 dark:to-gray-800">
-      <div className="mx-auto max-w-3xl p-6 bg-white rounded-lg shadow-xl dark:bg-gray-800">
+    <div className="min-h-screen px-4 py-12 relative"
+    style={{
+      perspective: '1000px',
+    }}>
+      <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
+      <div className="mx-auto max-w-3xl p-6 rounded-lg shadow-xl dark:bg-gray-800 transform-gpu" style={{
+        transformStyle: 'preserve-3d',
+        padding: '20px',
+        borderRadius: '10px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark background
+        boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
+      }}>
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Get in Touch
@@ -26,9 +35,28 @@ export default function ContactPage() {
 
           <a
             href="/survey"
-            className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 w-full sm:w-auto"
+            className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium transition duration-300 ease-out border-2 border-purple-500 rounded-full group"
           >
-            Take a Free Survey
+            <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-purple-500 group-hover:translate-x-0 ease">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </span>
+            <span className="absolute flex items-center justify-center w-full h-full text-purple-500 transition-all duration-300 transform group-hover:translate-x-full ease">
+              Take a Free Survey
+            </span>
+            <span className="relative invisible">Take a Free Survey</span>
           </a>
         </div>
 
@@ -56,7 +84,7 @@ export default function ContactPage() {
             Contact Information
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-center">
-            Email: <a href="mailto:info@example.com" className="text-blue-500">info@example.com</a>
+            Email: <a href="mailto:contact@meticsynergy.com" className="text-blue-500">contact@meticsynergy.com</a>
           </p>
           <p className="text-gray-600 dark:text-gray-300 text-center">
             Phone: +1234567890

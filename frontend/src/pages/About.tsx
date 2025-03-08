@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { FlickeringGrid } from '../components/FlickeringGrid';
+import ProfileCard from '../components/ProfileCard';
+import Card from '../components/Card'; // Assuming you create a Card.tsx component
 
 const About: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,35 +28,48 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-12 sm:py-16 md:py-20 bg-gray-900 text-white">
-      <div className="container mx-auto px-4">
+    <section ref={sectionRef} id="about" className="py-12 sm:py-16 md:py-20 bg-gray-900 text-white relative"
+    style={{
+      perspective: '1000px',
+    }}>
+      <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
+      <div className="container mx-auto px-4 transform-gpu" style={{
+        transformStyle: 'preserve-3d',
+        padding: '20px',
+        borderRadius: '10px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark background
+        boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
+      }}>
         <div className="text-center mb-10 sm:mb-16">
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 transform transition-all duration-500 hover:text-purple-400 ${isVisible ? 'slide-in-right' : 'opacity-0'}`}>
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 transform transition-all duration-500 text-purple-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             WHO WE ARE
           </h2>
-          <div className={`w-16 sm:w-20 h-1 bg-purple-600 mx-auto ${isVisible ? 'slide-in-bottom delay-100' : 'opacity-0'}`}></div>
+          <div className={`w-16 sm:w-20 h-1 bg-purple-600 mx-auto ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} transition-all duration-500 delay-100`}></div>
         </div>
-        
+
         <div className="max-w-4xl mx-auto">
-          <p className={`text-base sm:text-lg text-gray-300 text-center mb-8 sm:mb-12 leading-relaxed transform transition-all duration-500 hover:text-white px-2 ${isVisible ? 'slide-in-left delay-200' : 'opacity-0'}`}>
+          <p className={`text-base sm:text-lg text-gray-300 text-center mb-8 sm:mb-12 leading-relaxed transform transition-all duration-500  px-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'} transition-all duration-500 delay-200`}>
             At Metic Synergy, we specialize in crafting compelling stories and managing digital presence to help brands connect, engage, and grow.
             From social media to SEO, we're your one-stop solution for all things digital marketing.
           </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 mt-8 sm:mt-16 px-2">
-            <div className={`bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg transform transition-all duration-500 hover:scale-105 hover:bg-gray-700 ${isVisible ? 'slide-in-left delay-300' : 'opacity-0'}`}>
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-purple-400">Our Mission</h3>
-              <p className="text-gray-300 text-sm sm:text-base">
-                "To empower brands with innovative marketing strategies."
-              </p>
-            </div>
-            
-            <div className={`bg-gray-800 p-6 sm:p-8 rounded-lg shadow-lg transform transition-all duration-500 hover:scale-105 hover:bg-gray-700 ${isVisible ? 'slide-in-right delay-300' : 'opacity-0'}`}>
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-purple-400">Our Vision</h3>
-              <p className="text-gray-300 text-sm sm:text-base">
-                "To be the go-to partner for businesses looking to thrive in the digital space."
-              </p>
-            </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 mt-8 sm:mt-16 px-2 justify-items-center">
+            <Card>
+              <div className="text-center">
+                <div className="text-xl font-bold mb-2">Our Mission</div>
+                <p className="text-sm">
+                  "To empower brands with innovative marketing strategies."
+                </p>
+              </div>
+            </Card>
+            <Card>
+              <div className="text-center">
+                <div className="text-xl font-bold mb-2">Our Vision</div>
+                <p className="text-sm">
+                  "To be the go-to partner for businesses looking to thrive in the digital space."
+                </p>
+              </div>
+            </Card>
           </div>
         </div>
 
@@ -79,6 +95,6 @@ const About: React.FC = () => {
   );
 };
 
-import ProfileCard from '../components/ProfileCard';
+
 
 export default About;
