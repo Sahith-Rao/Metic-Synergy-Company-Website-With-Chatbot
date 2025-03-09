@@ -28,16 +28,13 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="py-12 sm:py-16 md:py-20 bg-gray-900 text-white relative"
+    <section ref={sectionRef} id="about" className="py-12 sm:py-16 md:py-20 bg-gray-900 text-white relative px-4 sm:px-6"
     style={{
       perspective: '1000px',
     }}>
       <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
-      <div className="container mx-auto px-4 transform-gpu" style={{
+      <div className="container mx-auto transform-gpu bg-black/50 rounded-lg p-4 sm:p-6 md:p-8" style={{
         transformStyle: 'preserve-3d',
-        padding: '20px',
-        borderRadius: '10px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark background
         boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
       }}>
         <div className="text-center mb-10 sm:mb-16">
@@ -47,13 +44,13 @@ const About: React.FC = () => {
           <div className={`w-16 sm:w-20 h-1 bg-purple-600 mx-auto ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} transition-all duration-500 delay-100`}></div>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
           <p className={`text-base sm:text-lg text-gray-300 text-center mb-8 sm:mb-12 leading-relaxed transform transition-all duration-500  px-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'} transition-all duration-500 delay-200`}>
             At Metic Synergy, we specialize in crafting compelling stories and managing digital presence to help brands connect, engage, and grow.
             From social media to SEO, we're your one-stop solution for all things digital marketing.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 mt-8 sm:mt-16 px-2 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-10 mt-6 sm:mt-8 md:mt-16 px-2 justify-items-center">
             <Card>
               <div className="text-center">
                 <div className="text-xl font-bold mb-2">Our Mission</div>
@@ -74,7 +71,7 @@ const About: React.FC = () => {
         </div>
 
 
-        <div className="mt-12 sm:mt-16">
+        <div className="mt-8 sm:mt-12 md:mt-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6">Our Accomplishments</h3>
           <p className="text-center text-gray-300 max-w-3xl mx-auto">
             We have worked with renowned clients such as **Figuring Out By Jay**, **Decathlon**, **Futbol Syndicate**, **Hyderabad FC**, and **AIFF**. Our expertise spans industries including real estate, restaurants, and lifestyle branding.
@@ -82,9 +79,9 @@ const About: React.FC = () => {
         </div>
 
         {/* Profile Cards */}
-        <div className="mt-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6">Our Team</h3>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 sm:mt-12 md:mt-16">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-purple-400 mb-4 sm:mb-6">Our Team</h3>
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <ProfileCard name="Shiva Saketh" designation="Chief Technology Officer" />
             <ProfileCard name="Meher Mani" designation="Chief Operations Officer" />
             <ProfileCard name="Manuvardhan" designation="Chief Product Officer" />

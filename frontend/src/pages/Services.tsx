@@ -39,12 +39,15 @@ const Services: React.FC = () => {
 
 
   return (
-    <section ref={sectionRef} id="services" className="py-12 sm:py-16 md:py-20 relative" style={{
+    <section ref={sectionRef} id="services" className="py-12 sm:py-16 md:py-20 relative px-4 sm:px-6" style={{
       perspective: '1000px',
     }}>
       <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto relative z-10 bg-black/50 rounded-lg p-4 sm:p-6 md:p-8 transform-gpu" style={{
+        transformStyle: 'preserve-3d',
+        boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
+      }}>
         <div className="text-center mb-10 sm:mb-16">
           <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 transform transition-all duration-500 hover:text-purple-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             WHY CHOOSE US
@@ -52,7 +55,7 @@ const Services: React.FC = () => {
           <div className={`w-16 sm:w-20 h-1 bg-purple-600 mx-auto ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} transition-all duration-500 delay-100`}></div>
         </div>
 
-        <div className={`max-w-4xl mx-auto rounded-xl shadow-xl p-6 sm:p-8 md:p-12 transform transition-all duration-700 hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+        <div className={`max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-4xl mx-auto rounded-xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-12 transform transition-all duration-700 hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <ul className="space-y-4 sm:space-y-6">
             {reasons.map((reason, index) => (
               <li
@@ -66,9 +69,9 @@ const Services: React.FC = () => {
           </ul>
         </div>
 
-        <div className="mt-12 sm:mt-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6 text-white">Our Services</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center justify-items-center">
+        <div className="mt-8 sm:mt-12 md:mt-16">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-purple-400 mb-4 sm:mb-6 text-white">Our Services</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 text-center justify-items-center">
             {services.map((service, index) => (
               <Card key={index}>
                 <div className="text-xl font-bold">{service}</div>

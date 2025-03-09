@@ -66,22 +66,19 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="bg-cover bg-center min-h-screen flex flex-col items-center justify-center text-white relative"
+    <div className="bg-cover bg-center min-h-screen flex flex-col items-center justify-center text-white relative px-4 sm:px-6"
     style={{
       perspective: '1000px',
     }}>
       <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
-      <div className="transform-gpu" style={{
+      <div className="transform-gpu w-full mx-auto max-w-7xl bg-black/50 rounded-lg p-4 sm:p-6 md:p-8" style={{
         transformStyle: 'preserve-3d',
-        padding: '20px',
-        borderRadius: '10px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark background
         boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
       }}>
         <Hero />
 
         {/* How We Work Section */}
-        <section ref={sectionRef} className="py-20 px-4 relative ripple">
+        <section ref={sectionRef} className="py-12 sm:py-16 md:py-20 px-2 sm:px-4 relative ripple">
           {/* Animated background elements */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] animate-pulse"></div>
@@ -94,7 +91,7 @@ const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl font-extrabold text-center mb-24 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-12 sm:mb-16 md:mb-24 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
             >
               HOW WE WORK
             </motion.h2>
@@ -131,7 +128,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Steps content - remains the same */}
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
               {steps.map((step, index) => (
                 <div
                   key={index}
@@ -168,7 +165,7 @@ const Home: React.FC = () => {
         </section>
 
        {/* Innovative Solutions Section */}
-        <section className="py-20 px-4 relative overflow-hidden ripple">
+        <section className="py-12 sm:py-16 md:py-20 px-2 sm:px-4 relative overflow-hidden ripple">
           {/* Enhanced background effects */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse"></div>
@@ -181,13 +178,13 @@ const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-8 sm:mb-12 md:mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
             >
               OUR INNOVATIVE SOLUTIONS
             </motion.h2>
 
             {/* Add glowing cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-xs sm:max-w-3xl md:max-w-4xl lg:max-w-6xl mx-auto">
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20 
@@ -252,14 +249,14 @@ const Home: React.FC = () => {
         <ClientMarquee />
 
         {/* Add a glowing CTA section */}
-        <section className="py-20 px-4 relative overflow-hidden">
+        <section className="py-12 sm:py-16 md:py-20 px-2 sm:px-4 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-black to-blue-900/20"></div>
           <div className="container mx-auto relative z-10">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 md:mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
                 Ready to Transform Your Digital Presence?
               </h2>
-              <p className="text-xl text-gray-300 mb-12">
+              <p className="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-10 md:mb-12">
                 Join the innovative brands that trust us with their digital success
               </p>
               <div className="flex justify-center">

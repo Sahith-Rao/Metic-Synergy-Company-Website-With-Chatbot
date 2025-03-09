@@ -23,19 +23,16 @@ const Book: React.FC = () => {
   };
 
   return (
-    <div className="pt-20 px-4 bg-cover bg-center min-h-screen flex flex-col items-center justify-center text-white relative"
+    <div className="pt-16 sm:pt-20 px-4 sm:px-6 bg-cover bg-center min-h-screen flex flex-col items-center justify-center text-white relative"
     style={{
       perspective: '1000px',
     }}>
       <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
-      <div className="max-w-3xl w-full transform-gpu" style={{
+      <div className="max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full transform-gpu bg-black/50 p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg" style={{
         transformStyle: 'preserve-3d',
-        padding: '40px',
-        borderRadius: '10px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark background
         boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
       }}>
-        <h1 className="text-3xl font-bold text-center mb-8">Book an Appointment</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-center mb-4 sm:mb-8">Book an Appointment</h1>
         
         <StyledWrapper>
           <div className="form-container">
