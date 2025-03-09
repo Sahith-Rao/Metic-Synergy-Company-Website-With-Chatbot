@@ -15,11 +15,43 @@ const Book: React.FC = () => {
     company: '',
     service: ''
   });
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    handleBookingSubmit(formData);
-    setFormData({ name: '', phone: '', email: '', date: '', time: '', company: '', service: '' });
+  
+    if (!validateEmail(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit booking');
+      }
+  
+      const result = await response.json();
+      console.log(result);
+      handleBookingSubmit(formData);
+      setFormData({ name: '', phone: '', email: '', date: '', time: '', company: '', service: '' });
+      setError(null);
+    } catch (err) {
+      console.error('Error submitting booking:', err);
+      setError('Failed to submit booking. Please try again.');
+    }
   };
 
   return (
@@ -36,6 +68,7 @@ const Book: React.FC = () => {
         
         <StyledWrapper>
           <div className="form-container">
+            {error && <div className="error-message">{error}</div>}
             <form className="form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">
@@ -156,6 +189,8 @@ const Book: React.FC = () => {
     </div>
   );
 };
+
+
 
 const StyledWrapper = styled.div`
   .form-container {
