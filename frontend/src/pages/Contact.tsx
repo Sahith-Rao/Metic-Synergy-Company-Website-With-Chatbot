@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import AppointmentForm from '../components/AppointmentForm';
 import BookAppointmentButton from '../components/BookAppointmentButton';
 import { FlickeringGrid } from '../components/FlickeringGrid';
+import HomeForm from '../components/HomeForm';
+import { FlipText } from '../registry/magicui/flip-text';
 
 export default function ContactPage() {
   const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
@@ -22,49 +24,22 @@ export default function ContactPage() {
         boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
       }}>
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Get in Touch
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">
+            <FlipText className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+              Get in Touch
+            </FlipText>
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
             We'd love to hear from you!
           </p>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-6 sm:flex-row sm:space-x-4 sm:space-y-0 mt-8">
+        <div className="flex flex-col items-center justify-center mt-8">
           <BookAppointmentButton className="w-full sm:w-auto" />
-
-          <a
-            href="/survey"
-            className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium transition duration-300 ease-out border-2 border-purple-500 rounded-full group"
-          >
-            <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-purple-500 group-hover:translate-x-0 ease">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                ></path>
-              </svg>
-            </span>
-            <span className="absolute flex items-center justify-center w-full h-full text-purple-500 transition-all duration-300 transform group-hover:translate-x-full ease">
-              Take a Free Survey
-            </span>
-            <span className="relative invisible">Take a Free Survey</span>
-          </a>
         </div>
 
         <div className="mt-8">
-          <AppointmentForm
-            isOpen={isAppointmentModalOpen}
-            onClose={() => setIsAppointmentModalOpen(false)}
-          />
+          <HomeForm />
         </div>
 
         <div className="mt-12 p-6 rounded-lg shadow-md dark:bg-gray-700">

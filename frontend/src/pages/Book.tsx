@@ -1,25 +1,289 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlickeringGrid } from '../components/FlickeringGrid';
+import { Calendar, Clock, Mail, Phone, User, Building } from 'lucide-react';
+import styled from 'styled-components';
+import { useBooking } from '../contexts/BookingContext';
 
 const Book: React.FC = () => {
+  const { handleBookingSubmit, services } = useBooking();
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    date: '',
+    time: '',
+    company: '',
+    service: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleBookingSubmit(formData);
+    setFormData({ name: '', phone: '', email: '', date: '', time: '', company: '', service: '' });
+  };
+
   return (
     <div className="pt-20 px-4 bg-cover bg-center min-h-screen flex flex-col items-center justify-center text-white relative"
     style={{
       perspective: '1000px',
     }}>
       <FlickeringGrid color="#000000" className="absolute inset-0 z-[-1]" />
-      <div className="transform-gpu" style={{
+      <div className="max-w-3xl w-full transform-gpu" style={{
         transformStyle: 'preserve-3d',
-        padding: '20px',
+        padding: '40px',
         borderRadius: '10px',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent dark background
         boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
       }}>
-      <h1 className="text-3xl font-bold text-center mb-8">Book Online</h1>
-      {/* Add your booking form or content here */}
+        <h1 className="text-3xl font-bold text-center mb-8">Book an Appointment</h1>
+        
+        <StyledWrapper>
+          <div className="form-container">
+            <form className="form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">
+                  <User className="icon" /> Full Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">
+                  <Mail className="icon" /> Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="Enter your email address"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="phone">
+                  <Phone className="icon" /> Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="Enter your phone number"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="company">
+                  <Building className="icon" /> Company/Business Name
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  placeholder="Enter your company or business name"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="service">Service Required</label>
+                <select
+                  id="service"
+                  name="service"
+                  value={formData.service}
+                  onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                  required
+                >
+                  <option value="">Select a service</option>
+                  {services.map((service, index) => (
+                    <option key={index} value={service}>
+                      {service}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="date-time-container">
+                <div className="form-group date-group">
+                  <label htmlFor="date">
+                    <Calendar className="icon" /> Date
+                  </label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    min={new Date().toISOString().split('T')[0]}
+                    required
+                  />
+                </div>
+                
+                <div className="form-group time-group">
+                  <label htmlFor="time">
+                    <Clock className="icon" /> Time
+                  </label>
+                  <input
+                    type="time"
+                    id="time"
+                    name="time"
+                    value={formData.time}
+                    onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              
+              <button className="form-submit-btn" type="submit">
+                Schedule Appointment
+              </button>
+            </form>
+          </div>
+        </StyledWrapper>
       </div>
     </div>
   );
 };
+
+const StyledWrapper = styled.div`
+  .form-container {
+    width: 100%;
+    background: linear-gradient(#212121, #212121) padding-box,
+                linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+    border: 2px solid transparent;
+    padding: 32px 24px;
+    font-size: 14px;
+    font-family: inherit;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    border-radius: 16px;
+  }
+
+  .form-container button:active {
+    scale: 0.95;
+  }
+
+  .form-container .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-container .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .date-time-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .date-group, .time-group {
+    flex: 1;
+  }
+
+  .form-container .form-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    color: #717171;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .form-container .form-group label .icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+  }
+
+  .form-container .form-group input,
+  .form-container .form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    background-color: transparent;
+    border: 1px solid #414141;
+  }
+
+  .form-container .form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+  }
+
+  .form-container .form-group select option {
+    background-color: #212121;
+    color: #fff;
+  }
+
+  .form-container .form-group input::placeholder {
+    opacity: 0.5;
+  }
+
+  .form-container .form-group input:focus,
+  .form-container .form-group select:focus {
+    outline: none;
+    border-color: #e81cff;
+  }
+
+  .form-container .form-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    font-family: inherit;
+    color: #fff;
+    font-weight: 600;
+    width: 100%;
+    max-width: 300px;
+    background: linear-gradient(145deg, #e81cff, #40c9ff);
+    border: none;
+    padding: 12px 16px;
+    font-size: inherit;
+    gap: 8px;
+    margin-top: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .form-container .form-submit-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(232, 28, 255, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .date-time-container {
+      flex-direction: column;
+    }
+  }
+`;
 
 export default Book;

@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
     { name: 'Services', path: '/services' },
     { name: 'Portfolio', path: '/portfolio' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Book Appointment', path: '/contact#booking-section' }
+    { name: 'Book Appointment', path: '/book' }
   ];
 
   const handleUsefulLinkClick = (path: string) => {

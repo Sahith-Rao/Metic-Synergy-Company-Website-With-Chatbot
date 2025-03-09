@@ -20,7 +20,7 @@ const Hero: React.FC = () => {
   }, []);
 
   const handleBooking = () => {
-    navigate('/contact');
+    navigate('/book');
     // Scroll to booking section after a short delay to ensure the page has loaded
     setTimeout(() => {
       const bookingSection = document.getElementById('booking-section');
@@ -30,8 +30,8 @@ const Hero: React.FC = () => {
     }, 100);
   };
 
-  const handleSurvey = () => {
-    navigate('/survey');
+  const handleBookAppointment = () => {
+    navigate('/book');
   };
 
   return (
@@ -100,7 +100,7 @@ const Hero: React.FC = () => {
             <HomeForm />
           </div>
           <div className="w-full md:w-auto mt-6 md:mt-0">
-            <Button onClick={handleSurvey} color="gray">Take a Free Survey</Button>
+            <Button onClick={handleBookAppointment} color="gray">Book an Appointment</Button>
           </div>
         </div>
       </div>

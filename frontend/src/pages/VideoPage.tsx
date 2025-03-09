@@ -7,7 +7,7 @@ const VideoPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleBookAppointment = () => {
-    navigate('/contact');
+    navigate('/book');
   };
 
   return (
@@ -58,7 +58,7 @@ const VideoPage: React.FC = () => {
                      shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40
                      transform hover:scale-105 font-medium text-lg"
           >
-            Loved what you see? Book an appointment
+            Book an appointment
           </button>
         </div>
       </div>

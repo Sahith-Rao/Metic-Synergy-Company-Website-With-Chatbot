@@ -25,10 +25,10 @@ const HomeForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Store form data in localStorage to access it on the video page if needed
+    // Store form data in localStorage to access it on the survey and video page if needed
     localStorage.setItem('userFormData', JSON.stringify(formData));
-    // Navigate to the video page
-    navigate('/video');
+    // Navigate to the survey page instead of directly to video
+    navigate('/survey');
   };
 
   const handleReset = () => {
