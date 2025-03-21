@@ -8,16 +8,25 @@ const Booking = require('./models/Booking'); // Import the Booking model
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+const FRONTEND_URL = process.env.FRONTEND_URL || '*'; // Allow all origins if FRONTEND_URL is not set
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || FRONTEND_URL === '*' || FRONTEND_URL.split(',').includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(bodyParser.json());
 
-const mongoURI = 'mongodb+srv://xwebweavex:gwvAwMijwtHRLf4S@metic-synergy.0qsk5.mongodb.net/?retryWrites=true&w=majority&appName=Metic-Synergy';
-mongoose.connect(mongoURI)
+mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
@@ -53,3 +62,6 @@ app.post('/api/bookings', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Export app for Vercel deployment
+module.exports = app;
