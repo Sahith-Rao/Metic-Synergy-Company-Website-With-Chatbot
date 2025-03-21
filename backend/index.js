@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { sendThankYouEmail } = require('./services/emailService'); // Import the email service
 const Booking = require('./models/Booking'); // Import the Booking model
 
 const app = express();
@@ -37,6 +39,10 @@ app.post('/api/bookings', async (req, res) => {
   try {
     await newBooking.save();
     console.log('Booking saved successfully:', newBooking);
+
+    // Send thank-you email
+    await sendThankYouEmail(email, name, date, time, service);
+
     res.status(201).json({ message: 'Booking saved successfully' });
   } catch (err) {
     console.error('Failed to save booking:', err);
