@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { TypingAnimation } from '../registry/magicui/typing-animation';
 import Button from './Button';
 import { FlickeringGrid } from './FlickeringGrid';
-import HomeForm from './HomeForm';
 
 const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,19 +18,8 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleBooking = () => {
-    navigate('/book');
-    // Scroll to booking section after a short delay to ensure the page has loaded
-    setTimeout(() => {
-      const bookingSection = document.getElementById('booking-section');
-      if (bookingSection) {
-        bookingSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
-
-  const handleBookAppointment = () => {
-    navigate('/book');
+  const handleGetStarted = () => {
+    navigate('/initial-form');
   };
 
   return (
@@ -93,15 +81,15 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div className={`flex flex-col md:flex-row justify-center items-center gap-6 transition-opacity duration-500 ${
+        <div className={`flex justify-center transition-opacity duration-500 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}>
-          <div className="w-full md:w-auto">
-            <HomeForm />
-          </div>
-          <div className="w-full md:w-auto mt-6 md:mt-0">
-            <Button onClick={handleBookAppointment} color="gray">Book an Appointment</Button>
-          </div>
+          <Button 
+            onClick={handleGetStarted} 
+            color="purple"
+          >
+            Get Started
+          </Button>
         </div>
       </div>
     </section>

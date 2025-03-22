@@ -31,24 +31,12 @@ const Book: React.FC = () => {
     }
   
     try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/api/bookings`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Failed to submit booking');
-      }
-  
-      const result = await response.json();
-      console.log(result);
-      handleBookingSubmit(formData);
+      // Use the BookingContext's handleBookingSubmit function to handle the API call
+      await handleBookingSubmit(formData);
       setFormData({ name: '', phone: '', email: '', date: '', time: '', company: '', service: '' });
       setError(null);
+      // Show success message
+      alert('Booking submitted successfully! We will send you a confirmation email shortly.');
     } catch (err) {
       console.error('Error submitting booking:', err);
       setError('Failed to submit booking. Please try again.');

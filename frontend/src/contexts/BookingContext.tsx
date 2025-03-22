@@ -18,6 +18,7 @@ export interface BookingFormData {
   date: string;
   time: string;
   service: string;
+  company?: string; // Optional to maintain backward compatibility
 }
 
 const services = [
@@ -44,7 +45,23 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const handleBookingSubmit = async (formData: BookingFormData) => {
     try {
       console.log('Booking submitted:', formData);
-      // Here you would typically make an API call to your backend
+      
+      // Make an API call to the backend
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          company: formData.company || 'Not provided' // Ensure company field exists
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit booking');
+      }
+      
       alert('Booking submitted successfully!');
       closeModal();
     } catch (error) {

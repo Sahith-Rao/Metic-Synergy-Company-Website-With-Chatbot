@@ -49,8 +49,14 @@ const VideoPage: React.FC = () => {
           </p>
         </div>
         
-        {/* CTA Button */}
-        <div className="text-center">
+        {/* CTA Button with Step 2 text */}
+        <div className="text-center bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20">
+          <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+            STEP 2: LIKE WHAT YOU HEAR? LET'S TALK...
+          </h3>
+          <p className="text-gray-300 mb-6">
+            Have questions? Interested in working together? Click the button below to schedule a call.
+          </p>
           <button 
             onClick={handleBookAppointment}
             className="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 px-8 rounded-xl 
