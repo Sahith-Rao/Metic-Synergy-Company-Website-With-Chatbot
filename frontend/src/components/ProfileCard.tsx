@@ -11,7 +11,7 @@ interface ProfileCardProps {
 const ProfileCard: React.FC<ProfileCardProps> = ({ name, designation, imageUrl }: ProfileCardProps) => {
   return (
     <div className="group relative overflow-hidden rounded-xl bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 dark:bg-gray-800">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       
       <div className="relative z-10 flex flex-col items-center">
         {imageUrl ? (
@@ -25,7 +25,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ name, designation, imageUrl }
             />
           </div>
         ) : (
-          <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-3xl font-bold text-white">
+          <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-white text-3xl font-bold text-gray-800">
             {name.charAt(0)}
           </div>
         )}

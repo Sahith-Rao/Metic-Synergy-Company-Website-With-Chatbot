@@ -22,7 +22,7 @@ const BrandDevelopment: React.FC = () => {
         "Clear brand communication",
         "Long-term brand value"
       ]}
-      image="/images/brand-development.jpg"
+      image="https://images.unsplash.com/photo-1583321500900-82807e458f3c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     />
   );
 };

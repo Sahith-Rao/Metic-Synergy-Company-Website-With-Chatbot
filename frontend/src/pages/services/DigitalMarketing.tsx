@@ -22,7 +22,7 @@ const DigitalMarketing: React.FC = () => {
         "Improved customer engagement",
         "Competitive market positioning"
       ]}
-      image="/images/digital-marketing.jpg"
+      image="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     />
   );
 };

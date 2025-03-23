@@ -185,7 +185,7 @@ const StyledWrapper = styled.div`
   .form-container {
     width: 100%;
     background: linear-gradient(#212121, #212121) padding-box,
-                linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+                linear-gradient(145deg, transparent 35%,#ffffff, #e0e0e0) border-box;
     border: 2px solid transparent;
     padding: 32px 24px;
     font-size: 14px;
@@ -270,7 +270,7 @@ const StyledWrapper = styled.div`
   .form-container .form-group input:focus,
   .form-container .form-group select:focus {
     outline: none;
-    border-color: #e81cff;
+    border-color: #ffffff;
   }
 
   .form-container .form-submit-btn {
@@ -279,11 +279,11 @@ const StyledWrapper = styled.div`
     justify-content: center;
     align-self: center;
     font-family: inherit;
-    color: #fff;
+    color: #212121;
     font-weight: 600;
     width: 100%;
     max-width: 300px;
-    background: linear-gradient(145deg, #e81cff, #40c9ff);
+    background: linear-gradient(145deg, #ffffff, #e0e0e0);
     border: none;
     padding: 12px 16px;
     font-size: inherit;
@@ -297,7 +297,7 @@ const StyledWrapper = styled.div`
   .form-container .form-submit-btn:hover {
     opacity: 0.9;
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(232, 28, 255, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.4);
   }
 
   @media (max-width: 768px) {

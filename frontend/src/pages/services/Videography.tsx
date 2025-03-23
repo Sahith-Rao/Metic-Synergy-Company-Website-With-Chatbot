@@ -22,7 +22,7 @@ const Videography: React.FC = () => {
         "Brand message reinforcement",
         "Higher conversion rates"
       ]}
-      image="/images/videography.jpg"
+      image="https://images.unsplash.com/photo-1576155053291-49e4782bfddd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     />
   );
 };

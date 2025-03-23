@@ -38,10 +38,10 @@ const About: React.FC = () => {
         boxShadow: '0px 10px 50px rgba(0, 0, 0, 0.8)', // Stronger shadow for depth
       }}>
         <div className="text-center mb-10 sm:mb-16">
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 transform transition-all duration-500 text-purple-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 transform transition-all duration-500 text-white ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             WHO WE ARE
           </h2>
-          <div className={`w-16 sm:w-20 h-1 bg-purple-600 mx-auto ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} transition-all duration-500 delay-100`}></div>
+          <div className={`w-16 sm:w-20 h-1 bg-white mx-auto ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} transition-all duration-500 delay-100`}></div>
         </div>
 
         <div className="max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
@@ -72,7 +72,7 @@ const About: React.FC = () => {
 
 
         <div className="mt-8 sm:mt-12 md:mt-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-purple-400 mb-6">Our Accomplishments</h3>
+          <h3 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">Our Accomplishments</h3>
           <p className="text-center text-gray-300 max-w-3xl mx-auto">
             We have worked with renowned clients such as **Figuring Out By Jay**, **Decathlon**, **Futbol Syndicate**, **Hyderabad FC**, and **AIFF**. Our expertise spans industries including real estate, restaurants, and lifestyle branding.
           </p>
@@ -80,7 +80,7 @@ const About: React.FC = () => {
 
         {/* Profile Cards */}
         <div className="mt-8 sm:mt-12 md:mt-16">
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-purple-400 mb-4 sm:mb-6">Our Team</h3>
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-white mb-4 sm:mb-6">Our Team</h3>
           <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <ProfileCard name="Shiva Saketh" designation="Chief Technology Officer" />
             <ProfileCard name="Meher Mani" designation="Chief Operations Officer" />

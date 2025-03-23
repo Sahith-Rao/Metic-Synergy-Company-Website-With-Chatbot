@@ -22,7 +22,7 @@ const SocialMedia: React.FC = () => {
         "Real-time customer interaction",
         "Measurable ROI on social efforts"
       ]}
-      image="/images/social-media.jpg"
+      image="https://images.unsplash.com/photo-1611926653458-09294b3142bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     />
   );
 };

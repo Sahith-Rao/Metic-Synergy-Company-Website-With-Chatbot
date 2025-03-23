@@ -1,14 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import AppointmentForm from '../components/AppointmentForm';
-import BookAppointmentButton from '../components/BookAppointmentButton';
 import { FlickeringGrid } from '../components/FlickeringGrid';
-import HomeForm from '../components/HomeForm';
+import { Mail, Phone, MapPin, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { FlipText } from '../registry/magicui/flip-text';
 
 export default function ContactPage() {
-  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen px-4 sm:px-6 py-8 sm:py-12 relative"
@@ -22,7 +19,7 @@ export default function ContactPage() {
       }}>
         <div className="mb-6 sm:mb-8 text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">
-            <FlipText className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+            <FlipText className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-200">
               Get in Touch
             </FlipText>
           </h1>
@@ -31,40 +28,77 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center justify-center mt-8">
-          <BookAppointmentButton className="w-full sm:w-auto" />
+        <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <div className="p-6 rounded-lg bg-gray-800 shadow-md">
+            <h2 className="text-2xl font-bold text-white mb-4">Contact Us Directly</h2>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <Mail className="w-5 h-5 text-white mr-3" />
+                <a href="mailto:hello@meticsynergy.com" className="text-gray-300 hover:text-white transition-colors">
+                  hello@meticsynergy.com
+                </a>
+              </div>
+              <div className="flex items-center">
+                <Phone className="w-5 h-5 text-white mr-3" />
+                <a href="tel:+1234567890" className="text-gray-300 hover:text-white transition-colors">
+                  +1 (234) 567-890
+                </a>
+              </div>
+              <div className="flex items-center">
+                <MapPin className="w-5 h-5 text-white mr-3" />
+                <span className="text-gray-300">
+                  123 Creative Avenue, Digital District<br />
+                  Hyderabad, India
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-lg bg-gray-800 shadow-md">
+            <h2 className="text-2xl font-bold text-white mb-4">Business Hours</h2>
+            <div className="space-y-2">
+              <p className="text-gray-300">
+                <span className="font-medium text-white">Monday - Friday:</span> 9:00 AM - 6:00 PM
+              </p>
+              <p className="text-gray-300">
+                <span className="font-medium text-white">Saturday:</span> 10:00 AM - 4:00 PM
+              </p>
+              <p className="text-gray-300">
+                <span className="font-medium text-white">Sunday:</span> Closed
+              </p>
+              <p className="mt-4 text-gray-300">
+                We typically respond to all inquiries within 24 hours during business days.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-8">
-          <HomeForm />
-        </div>
-
-        <div className="mt-8 sm:mt-12 p-4 sm:p-6 rounded-lg shadow-md dark:bg-gray-700">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+        <div className="mt-8 p-6 rounded-lg bg-gray-800 shadow-md">
+          <h2 className="text-2xl font-bold text-white mb-4 text-center">
             About Metic Synergy
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 text-center">
-            We are a team of passionate marketing experts dedicated to helping businesses grow.
+          <p className="text-gray-300 text-center mb-4">
+            We are a full-service digital marketing and creative agency specializing in helping businesses establish their brand presence and grow their digital footprint.
           </p>
-          <p className="text-gray-600 dark:text-gray-300 text-center">
-            Contact us today to learn more about our services!
+          <p className="text-gray-300 text-center">
+            Our team of experts combines strategic thinking with creative execution to deliver exceptional results for our clients across various industries.
           </p>
         </div>
 
-        <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-lg shadow-md dark:bg-gray-700">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 text-center">
-            Contact Information
+        <div className="mt-8 p-6 rounded-lg bg-gray-800 shadow-md">
+          <h2 className="text-2xl font-bold text-white mb-4 text-center">
+            Connect With Us
           </h2>
-          <div className="space-y-2 sm:space-y-3">
-            <p className="text-gray-600 dark:text-gray-300 text-center">
-              Email: <a href="mailto:contact@meticsynergy.com" className="text-blue-500">contact@meticsynergy.com</a>
-            </p>
-            <p className="text-gray-600 dark:text-gray-300 text-center">
-              Phone: +1234567890
-            </p>
-            <p className="text-gray-600 dark:text-gray-300 text-center">
-              Address: 123 Main Street, Anytown USA
-            </p>
+          <div className="flex justify-center space-x-6 mt-4">
+            <a href="https://instagram.com/meticsynergy" className="text-gray-300 hover:text-white transition-colors">
+              <Instagram className="w-8 h-8" />
+            </a>
+            <a href="https://twitter.com/meticsynergy" className="text-gray-300 hover:text-white transition-colors">
+              <Twitter className="w-8 h-8" />
+            </a>
+            <a href="https://linkedin.com/company/meticsynergy" className="text-gray-300 hover:text-white transition-colors">
+              <Linkedin className="w-8 h-8" />
+            </a>
           </div>
         </div>
       </div>

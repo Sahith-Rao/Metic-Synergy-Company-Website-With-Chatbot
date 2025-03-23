@@ -22,7 +22,7 @@ const ContentCreation: React.FC = () => {
         "Better lead generation",
         "Stronger content marketing ROI"
       ]}
-      image="/images/content-creation.jpg"
+      image="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     />
   );
 };

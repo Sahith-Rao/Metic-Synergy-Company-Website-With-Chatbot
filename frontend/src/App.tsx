@@ -23,7 +23,7 @@ function App() {
   return (
     <BookingProvider>
       <Router>
-        <div className="min-h-screen bg-black text-white" style={{ perspective: '1000px' }}>
+        <div className="min-h-screen text-white relative bg-black">
           <Header />
           <main>
             <Routes>
