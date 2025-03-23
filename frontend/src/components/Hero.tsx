@@ -1,4 +1,4 @@
-import React from 'react';
+  import React from 'react';
 import { Instagram, Mail, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
           </h1>
         </div>
         
-        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-4xl mb-10 leading-relaxed text-white text-left font-semibold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-4xl mb-10 leading-relaxed text-white text-left font-light" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
           CRAFTING IMPACTFUL STORIES THROUGH DIGITAL MARKETING, PHOTOGRAPHY AND
           CREATIVE AD SOLUTIONS
         </p>
