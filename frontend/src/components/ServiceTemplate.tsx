@@ -58,12 +58,6 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
               </ul>
             </div>
           </div>
-
-          <div className="text-center">
-            <button className="bg-white text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors shadow-md">
-              Learn More
-            </button>
-          </div>
         </div>
       </div>
     </section>

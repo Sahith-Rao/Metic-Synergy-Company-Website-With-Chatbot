@@ -39,7 +39,7 @@ const Portfolio: React.FC = () => {
       currentStep++;
       
       setCounts({
-        years: Math.min(10, Math.floor((10 * currentStep) / steps)),
+        years: 1, // Always show 1 year
         satisfaction: Math.min(100, Math.floor((100 * currentStep) / steps)),
         traffic: Math.min(90, Math.floor((90 * currentStep) / steps))
       });
