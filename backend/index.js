@@ -3,14 +3,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { sendThankYouEmail } = require('./services/emailService'); // Import the email service
-const Booking = require('./models/Booking'); // Import the Booking model
+const { sendThankYouEmail } = require('./services/emailService');
+const Booking = require('./models/Booking');
+const SurveyResponse = require('./models/SurveyResponse');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-const FRONTEND_URL = process.env.FRONTEND_URL || '*'; // Allow all origins if FRONTEND_URL is not set
+const FRONTEND_URL = process.env.FRONTEND_URL || '*';
 
+// Enhanced CORS configuration
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || FRONTEND_URL === '*' || FRONTEND_URL.split(',').includes(origin)) {
@@ -20,67 +22,134 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-app.use(bodyParser.json());
+// Enhanced body parser
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+// MongoDB connection with better options
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'healthy',
+    timestamp: new Date(),
+    dbStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
+});
+
+// Survey responses endpoint
+app.post('/api/survey-responses', async (req, res) => {
+  try {
+    const { name, email, answers } = req.body;
+
+    if (!name || !email || !answers) {
+      return res.status(400).json({ 
+        message: 'Missing required fields: name, email, or answers' 
+      });
+    }
+
+    const newResponse = new SurveyResponse({
+      name,
+      email,
+      answers
+    });
+
+    await newResponse.save();
+    
+    res.status(201).json({ 
+      message: 'Survey response saved successfully',
+      responseId: newResponse._id
+    });
+  } catch (err) {
+    console.error('Survey response error:', err);
+    res.status(500).json({ 
+      message: 'Failed to save survey response',
+      error: err.message
+    });
+  }
+});
+
+// Existing booking endpoint
 app.post('/api/bookings', async (req, res) => {
-  const { name, phone, email, date, time, company, service } = req.body;
+  try {
+    const { name, phone, email, date, time, company, service } = req.body;
 
-  console.log('Received booking data:', { name, phone, email, date, time, company, service });
+    if (!name || !email || !date || !time || !service) {
+      return res.status(400).json({ 
+        message: 'Missing required fields' 
+      });
+    }
 
     const newBooking = new Booking({
       name,
-      phone,
+      phone: phone || undefined,
       email,
       date,
       time,
-      company,
+      company: company || undefined,
       service,
     });
 
-    try {
-      // First save the booking
-      await newBooking.save();
-      console.log('Booking saved successfully:', newBooking);
+    await newBooking.save();
 
-      try {
-        // Then attempt to send the email
-        await sendThankYouEmail(email, name, date, time, service);
-        // If email sending succeeds, return success with emailSent flag
-        res.status(201).json({ 
-          message: 'Booking saved successfully', 
-          emailSent: true 
-        });
-      } catch (emailErr) {
-        // If email sending fails but booking was saved, return partial success
-        console.error('Failed to send email:', emailErr);
-        res.status(201).json({ 
-          message: 'Booking saved successfully, but failed to send confirmation email', 
-          emailSent: false,
-          emailError: emailErr.message 
-        });
-      }
-    } catch (err) {
-      // If booking fails to save
-      console.error('Failed to save booking:', err);
-      res.status(500).json({ 
-        message: 'Failed to save booking', 
-        error: err.message,
-        emailSent: false
+    try {
+      await sendThankYouEmail(email, name, date, time, service);
+      res.status(201).json({ 
+        message: 'Booking saved successfully', 
+        emailSent: true,
+        bookingId: newBooking._id
+      });
+    } catch (emailErr) {
+      console.error('Email error:', emailErr);
+      res.status(201).json({ 
+        message: 'Booking saved but email failed', 
+        emailSent: false,
+        bookingId: newBooking._id
       });
     }
+  } catch (err) {
+    console.error('Booking error:', err);
+    res.status(500).json({ 
+      message: 'Failed to save booking',
+      error: err.message 
+    });
+  }
 });
 
-app.listen(PORT, () => {
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ 
+    message: 'Internal server error',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// Export app for Vercel deployment
+// Handle shutdown gracefully
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down gracefully');
+  server.close(() => {
+    mongoose.connection.close(false, () => {
+      console.log('MongoDB connection closed');
+      process.exit(0);
+    });
+  });
+});
+
 module.exports = app;
