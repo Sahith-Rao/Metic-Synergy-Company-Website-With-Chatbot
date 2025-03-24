@@ -35,28 +35,47 @@ app.post('/api/bookings', async (req, res) => {
 
   console.log('Received booking data:', { name, phone, email, date, time, company, service });
 
-  const newBooking = new Booking({
-    name,
-    phone,
-    email,
-    date,
-    time,
-    company,
-    service,
-  });
+    const newBooking = new Booking({
+      name,
+      phone,
+      email,
+      date,
+      time,
+      company,
+      service,
+    });
 
-  try {
-    await newBooking.save();
-    console.log('Booking saved successfully:', newBooking);
+    try {
+      // First save the booking
+      await newBooking.save();
+      console.log('Booking saved successfully:', newBooking);
 
-    // Send thank-you email
-    await sendThankYouEmail(email, name, date, time, service);
-
-    res.status(201).json({ message: 'Booking saved successfully' });
-  } catch (err) {
-    console.error('Failed to save booking:', err);
-    res.status(500).json({ message: 'Failed to save booking', error: err.message });
-  }
+      try {
+        // Then attempt to send the email
+        await sendThankYouEmail(email, name, date, time, service);
+        // If email sending succeeds, return success with emailSent flag
+        res.status(201).json({ 
+          message: 'Booking saved successfully', 
+          emailSent: true 
+        });
+      } catch (emailErr) {
+        // If email sending fails but booking was saved, return partial success
+        console.error('Failed to send email:', emailErr);
+        res.status(201).json({ 
+          message: 'Booking saved successfully, but failed to send confirmation email', 
+          emailSent: false,
+          emailError: emailErr.message 
+        });
+      }
+    } catch (err) {
+      // If booking fails to save
+      console.error('Failed to save booking:', err);
+      res.status(500).json({ 
+        message: 'Failed to save booking', 
+        error: err.message,
+        emailSent: false
+      });
+    }
 });
 
 app.listen(PORT, () => {

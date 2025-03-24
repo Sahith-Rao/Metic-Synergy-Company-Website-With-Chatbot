@@ -44,6 +44,17 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const handleBookingSubmit = async (formData: BookingFormData) => {
     try {
+      // Validate all required fields
+      if (!formData.name || !formData.phone || !formData.email) {
+        alert('Please provide your name, phone number, and email.');
+        return;
+      }
+      
+      if (!formData.date || !formData.time) {
+        alert('Please select a date and time for your appointment.');
+        return;
+      }
+      
       console.log('Booking submitted:', formData);
       
       // Make an API call to the backend
@@ -62,7 +73,17 @@ export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         throw new Error('Failed to submit booking');
       }
       
-      alert('Booking submitted successfully!');
+      // Parse the response to check if email was sent
+      const responseData = await response.json();
+      
+      if (responseData.emailSent) {
+        // Email was sent successfully
+        alert('Booking submitted successfully! A confirmation email has been sent to your email address.');
+      } else {
+        // Booking saved but email failed
+        alert('Booking submitted successfully!. Please check your booking details with us directly.');
+      }
+      
       closeModal();
     } catch (error) {
       console.error('Error submitting booking:', error);

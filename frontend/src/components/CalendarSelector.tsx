@@ -20,12 +20,6 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
   const [timeZone, setTimeZone] = useState('');
   const [customTime, setCustomTime] = useState(selectedTime || '');
   
-  // Available times are now just suggestions
-  const availableTimeOptions = [
-    '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', 
-    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
-    '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'
-  ];
 
   // Initialize timezone
   useEffect(() => {
@@ -148,7 +142,8 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
         <h2>Select a Date & Time</h2>
       </CalendarHeader>
       
-      <CalendarWrapper>
+      <CalendarGrid>
+        <CalendarWrapper>
         <MonthNavigation>
           <NavButton onClick={prevMonth} aria-label="Previous month">
             <ChevronLeft size={20} />
@@ -172,61 +167,43 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
         <DaysGrid>
           {renderCalendarDays()}
         </DaysGrid>
-      </CalendarWrapper>
+        </CalendarWrapper>
 
-      {selectedDateObj && (
+        {/* Always show time selection regardless of date selection */}
         <TimeSelectionWrapper>
-          <TimeSelectionHeader>
-            <h3>Available Times</h3>
-            <TimeZoneSelector>
-              <Globe size={16} />
-              <select 
-                value={timeZone} 
-                onChange={(e) => setTimeZone(e.target.value)}
-              >
-                <option value={timeZone}>{timeZone.replace('_', ' ')}</option>
-              </select>
-            </TimeZoneSelector>
-          </TimeSelectionHeader>
-          <div>
-            <TimeSelectionFlexible>
-              <TimeInputWrapper>
-                <TimeInputLabel>Choose a time</TimeInputLabel>
-                <TimeInput 
-                  type="time" 
-                  value={customTime}
-                  onChange={(e) => {
-                    setCustomTime(e.target.value);
-                    handleTimeSelect(e.target.value);
-                  }}
-                />
-              </TimeInputWrapper>
+        <TimeSelectionHeader>
+          <h3>Select a Time</h3>
+          <TimeZoneSelector>
+            <Globe size={16} />
+            <select 
+              value={timeZone} 
+              onChange={(e) => setTimeZone(e.target.value)}
+            >
+              <option value={timeZone}>{timeZone.replace('_', ' ')}</option>
+            </select>
+          </TimeZoneSelector>
+        </TimeSelectionHeader>
+        <div>
+          <TimeSelectionFlexible>
+            <TimeInputWrapper>
+              <TimeInputLabel>Choose a time</TimeInputLabel>
+              <TimeInput 
+                type="time" 
+                value={customTime}
+                onChange={(e) => {
+                  setCustomTime(e.target.value);
+                  handleTimeSelect(e.target.value);
+                }}
+              />
+            </TimeInputWrapper>
 
-              <TimeZoneDisplay>
-                India Standard Time (11:54am)
-              </TimeZoneDisplay>
-            </TimeSelectionFlexible>
-            
-            <TimeSlotSuggestions>
-              <SuggestionLabel>Or select a suggested time:</SuggestionLabel>
-              <TimeSlotsGrid>
-                {availableTimeOptions.map(time => (
-                  <TimeSlot 
-                    key={time} 
-                    onClick={() => {
-                      setCustomTime(time);
-                      handleTimeSelect(time);
-                    }}
-                    isSelected={selectedTime === time}
-                  >
-                    {time}
-                  </TimeSlot>
-                ))}
-              </TimeSlotsGrid>
-            </TimeSlotSuggestions>
-          </div>
+            <TimeZoneDisplay>
+              India Standard Time (11:54am)
+            </TimeZoneDisplay>
+          </TimeSelectionFlexible>
+        </div>
         </TimeSelectionWrapper>
-      )}
+      </CalendarGrid>
     </CalendarContainer>
   );
 };
@@ -247,6 +224,14 @@ const CalendarHeader = styled.div`
     font-weight: 600;
     margin: 0;
   }
+  
+  @media (max-width: 480px) {
+    padding-bottom: 12px;
+    
+    h2 {
+      font-size: 20px;
+    }
+  }
 `;
 
 const CalendarWrapper = styled.div`
@@ -254,6 +239,11 @@ const CalendarWrapper = styled.div`
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 20px;
+  
+  @media (max-width: 480px) {
+    padding: 8px;
+    margin-bottom: 16px;
+  }
 `;
 
 const MonthNavigation = styled.div`
@@ -302,6 +292,10 @@ const DayLabel = styled.div`
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
   padding: 4px 0;
+  
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 const DaysGrid = styled.div`
@@ -312,6 +306,7 @@ const DaysGrid = styled.div`
 
 const DayCell = styled.button<{ isToday?: boolean; isSelected?: boolean; isPast?: boolean }>`
   height: 36px;
+  width: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -341,14 +336,36 @@ const DayCell = styled.button<{ isToday?: boolean; isSelected?: boolean; isPast?
   &:focus {
     outline: none;
   }
+  
+  @media (max-width: 480px) {
+    height: 32px;
+    width: 32px;
+    font-size: 12px;
+  }
 `;
 
 const EmptyCell = styled.div`
   height: 36px;
+  width: 36px;
+  
+  @media (max-width: 480px) {
+    height: 32px;
+    width: 32px;
+  }
+`;
+
+const CalendarGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 const TimeSelectionWrapper = styled.div`
-  margin-top: 20px;
 `;
 
 const TimeSelectionHeader = styled.div`
@@ -361,6 +378,12 @@ const TimeSelectionHeader = styled.div`
     font-size: 16px;
     font-weight: 500;
     margin: 0;
+  }
+  
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 `;
 
@@ -391,29 +414,6 @@ const TimeZoneSelector = styled.div`
   }
 `;
 
-const TimeSlotsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 12px;
-`;
-
-const TimeSlot = styled.button<{ isSelected?: boolean }>`
-  padding: 10px;
-  border-radius: 6px;
-  background-color: ${({ isSelected }) => isSelected ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.05)'};
-  border: 1px solid ${({ isSelected }) => isSelected ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.1)'};
-  color: white;
-  text-align: center;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: ${({ isSelected }) => isSelected ? 'rgba(59, 130, 246, 0.8)' : 'rgba(255, 255, 255, 0.1)'};
-  }
-  
-  &:focus {
-    outline: none;
-  }
-`;
 
 // New styled components for time selection
 const TimeSelectionFlexible = styled.div`
@@ -424,6 +424,12 @@ const TimeSelectionFlexible = styled.div`
   padding: 16px;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
+  
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
 `;
 
 const TimeInputWrapper = styled.div`
@@ -451,6 +457,13 @@ const TimeInput = styled.input`
     outline: none;
     border-color: rgba(59, 130, 246, 0.8);
   }
+  
+  @media (max-width: 480px) {
+    width: 100%;
+    max-width: 150px;
+    font-size: 14px;
+    padding: 6px 8px;
+  }
 `;
 
 const TimeZoneDisplay = styled.div`
@@ -459,16 +472,11 @@ const TimeZoneDisplay = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+  
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
-const TimeSlotSuggestions = styled.div`
-  margin-top: 20px;
-`;
-
-const SuggestionLabel = styled.p`
-  font-size: 14px;
-  margin-bottom: 12px;
-  color: rgba(255, 255, 255, 0.7);
-`;
 
 export default CalendarSelector;
