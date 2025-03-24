@@ -84,14 +84,21 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
   };
 
   // Handle date selection
-  const handleDateSelect = (day: number) => {
-    const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    if (isPastDate(new Date(selected))) return;
-    
-    setSelectedDateObj(selected);
-    const formattedDate = selected.toISOString().split('T')[0];
-    onDateSelect(formattedDate);
-  };
+  // In CalendarSelector.tsx, update the handleDateSelect function:
+const handleDateSelect = (day: number) => {
+  const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+  if (isPastDate(new Date(selected))) return;
+  
+  setSelectedDateObj(selected);
+  
+  // Fix: Use local date string instead of ISO string to avoid timezone issues
+  const year = selected.getFullYear();
+  const month = String(selected.getMonth() + 1).padStart(2, '0');
+  const dayOfMonth = String(selected.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${dayOfMonth}`;
+  
+  onDateSelect(formattedDate);
+};
 
   // Handle time selection
   const handleTimeSelect = (time: string) => {

@@ -252,17 +252,19 @@ const Book: React.FC = () => {
                                         </div>
                                     }
                                 </div>
+                                
                                 <CalendarSelector
-                                    selectedDate={formData.date}
-                                    selectedTime={formData.time}
-                                    onDateSelect={(date) => {
-                                        setFormData({ ...formData, date });
-                                        setFormTouched(prev => ({ ...prev, date: true }));
-                                    }}
-                                    onTimeSelect={(time) => {
-                                        setFormData({ ...formData, time });
-                                        setFormTouched(prev => ({ ...prev, time: true }));
-                                    }}
+                                selectedDate={formData.date}
+                                selectedTime={formData.time}
+                                onDateSelect={(date) => {
+                                    // Ensure the date is in the correct format (YYYY-MM-DD)
+                                    setFormData({ ...formData, date });
+                                    setFormTouched(prev => ({ ...prev, date: true }));
+                                }}
+                                onTimeSelect={(time) => {
+                                    setFormData({ ...formData, time });
+                                    setFormTouched(prev => ({ ...prev, time: true }));
+                                }}
                                 />
                             </div>
 
