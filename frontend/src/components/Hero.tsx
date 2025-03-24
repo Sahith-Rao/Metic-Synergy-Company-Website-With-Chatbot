@@ -1,76 +1,46 @@
-import React, { useEffect, useState } from 'react';
+  import React from 'react';
 import { Instagram, Mail, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { TypingAnimation } from '../registry/magicui/typing-animation';
 import Button from './Button';
-import { FlickeringGrid } from './FlickeringGrid';
-import HomeForm from './HomeForm';
 
 const Hero: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
   
-  useEffect(() => {
-    // Set visible after component mounts to trigger animations
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleBooking = () => {
-    navigate('/book');
-    // Scroll to booking section after a short delay to ensure the page has loaded
-    setTimeout(() => {
-      const bookingSection = document.getElementById('booking-section');
-      if (bookingSection) {
-        bookingSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+  const handleGetStarted = () => {
+    navigate('/initial-form');
   };
 
-  const handleBookAppointment = () => {
-    navigate('/book');
-  };
+  // Modern blue-toned cityscape background with glass skyscrapers
+  const cityBackgroundUrl = "https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2800&q=80";
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center text-white pt-16 pb-8 bg-black overflow-hidden">
-      {/* Flickering grid background with black color */}
-      <FlickeringGrid 
-        color="#ffffff" 
-        className="absolute inset-0 z-0" 
-        maxOpacity={0.15}
-        flickerChance={0.1}
-      />
+    <section 
+      className="relative min-h-screen flex items-center justify-center text-white pt-16 pb-8 overflow-hidden"
+      style={{
+        backgroundImage: `url(${cityBackgroundUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Content container with improved contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/50 z-0"></div>
       
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black/90 z-1"></div>
-      
-      <div className="z-10 max-w-4xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className={`transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
-            <TypingAnimation 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-serif"
-              duration={100}
-              delay={200}
-              startOnView={true}
-            >
+      <div className="z-10 w-full container pl-8 sm:pl-12 md:pl-16">
+        <div className="text-left mb-8">
+          <h1>
+            <span className="text-6xl md:text-7xl lg:text-8xl font-bold text-white" style={{ fontFamily: 'Letterstich plain regular', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
               METIC-SYNERGY
-            </TypingAnimation>
+            </span>
           </h1>
         </div>
         
-        <p className={`text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-200 transition-opacity duration-500 px-2 text-center ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}>
-          "CRAFTING IMPACTFUL STORIES THROUGH DIGITAL MARKETING, PHOTOGRAPHY AND
-          CREATIVE AD SOLUTIONS"
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-4xl mb-10 leading-relaxed text-white text-left font-light" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+          CRAFTING IMPACTFUL STORIES THROUGH DIGITAL MARKETING, PHOTOGRAPHY AND
+          CREATIVE AD SOLUTIONS
         </p>
 
-        <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 mb-12 text-sm sm:text-base transition-opacity duration-500 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}>
+        <div className="flex flex-col sm:flex-row items-start gap-6 mb-12 text-sm sm:text-base">
           <a
             href="https://instagram.com/meticsynergy"
             target="_blank"
@@ -93,15 +63,13 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div className={`flex flex-col md:flex-row justify-center items-center gap-6 transition-opacity duration-500 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}>
-          <div className="w-full md:w-auto">
-            <HomeForm />
-          </div>
-          <div className="w-full md:w-auto mt-6 md:mt-0">
-            <Button onClick={handleBookAppointment} color="gray">Book an Appointment</Button>
-          </div>
+        <div className="flex justify-start">
+          <Button 
+            onClick={handleGetStarted} 
+            color="white"
+          >
+            Get Started
+          </Button>
         </div>
       </div>
     </section>

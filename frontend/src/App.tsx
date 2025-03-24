@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Portfolio from './components/Portfolio';
+import ChatBot from './components/ChatBot';
+import { ChatBotProvider } from './contexts/ChatBotContext';
 import Contact from './pages/Contact';
 import Book from './pages/Book';
 import { BookingProvider } from './contexts/BookingContext';
@@ -17,14 +19,16 @@ import SocialMedia from './pages/services/SocialMedia';
 import ContentCreation from './pages/services/ContentCreation';
 import Survey from './pages/Survey';
 import VideoPage from './pages/VideoPage';
+import InitialForm from './pages/InitialForm';
 
 function App() {
   return (
     <BookingProvider>
-      <Router>
-        <div className="min-h-screen bg-black text-white" style={{ perspective: '1000px' }}>
-          <Header />
-          <main>
+      <ChatBotProvider>
+        <Router>
+          <div className="min-h-screen text-white relative bg-black">
+            <Header />
+            <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -38,14 +42,17 @@ function App() {
               <Route path="/services/brand-development" element={<BrandDevelopment />} />
               <Route path="/services/social-media" element={<SocialMedia />} />
               <Route path="/services/content-creation" element={<ContentCreation />} />
+              <Route path="/initial-form" element={<InitialForm />} />
               <Route path="/survey" element={<Survey />} />
               <Route path="/video" element={<VideoPage />} />
             </Routes>
-          </main>
-          <Footer />
-          <BookingModal />
-        </div>
-      </Router>
+            </main>
+            <Footer />
+            <BookingModal />
+            <ChatBot />
+          </div>
+        </Router>
+      </ChatBotProvider>
     </BookingProvider>
   );
 }

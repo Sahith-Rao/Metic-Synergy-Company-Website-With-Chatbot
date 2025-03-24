@@ -33,7 +33,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background: linear-gradient(45deg, #ffbc00, #ff0058);
+    background: linear-gradient(45deg, #121212, #2a2a2a);
     border-radius: 1.2em;
   }
 
@@ -44,7 +44,7 @@ const StyledWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #ffbc00, #ff0058);
+    background: linear-gradient(45deg, #121212, #2a2a2a);
     filter: blur(30px);
   }
 
@@ -54,7 +54,7 @@ const StyledWrapper = styled.div`
     left: 6px;
     right: 6px;
     bottom: 6px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 2;
     border-radius: 1em;
   }

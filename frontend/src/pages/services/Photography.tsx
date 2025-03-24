@@ -22,7 +22,7 @@ const Photography: React.FC = () => {
         "Enhanced brand perception",
         "Versatile image library for marketing"
       ]}
-      image="/images/photography.jpg"
+      image="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
     />
   );
 };

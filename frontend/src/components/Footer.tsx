@@ -38,13 +38,13 @@ const Footer: React.FC = () => {
                 href="https://instagram.com/meticsynergy" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
+                className="text-gray-400 hover:text-white transition-colors"
               >
                 <Instagram />
               </a>
               <a 
                 href="mailto:meticsynergy@gmail.com"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
+                className="text-gray-400 hover:text-white transition-colors"
               >
                 <Mail />
               </a>
@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
                   <Link
                     to={link.path}
                     onClick={() => handleUsefulLinkClick(link.path)}
-                    className="text-gray-400 hover:text-purple-400 transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
               </p>
               <a 
                 href="mailto:meticsynergy@gmail.com"
-                className="flex items-center text-gray-400 hover:text-purple-400 transition-colors"
+                className="flex items-center text-gray-400 hover:text-white transition-colors"
               >
                 <Mail className="mr-2" />
                 meticsynergy@gmail.com

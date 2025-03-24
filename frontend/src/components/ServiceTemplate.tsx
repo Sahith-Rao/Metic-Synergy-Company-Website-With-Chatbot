@@ -34,33 +34,29 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6 text-purple-400">What We Offer</h2>
+            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-white/20">
+              <h2 className="text-2xl font-bold mb-6 text-white">What We Offer</h2>
               <ul className="space-y-4">
                 {features.map((feature, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="text-purple-400 mr-2">•</span>
+                    <span className="text-white mr-2">•</span>
                     <span className="text-gray-300">{feature}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-purple-500/20">
-              <h2 className="text-2xl font-bold mb-6 text-purple-400">Benefits</h2>
+            <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-white/20">
+              <h2 className="text-2xl font-bold mb-6 text-white">Benefits</h2>
               <ul className="space-y-4">
                 {benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="text-purple-400 mr-2">•</span>
+                    <span className="text-white mr-2">•</span>
                     <span className="text-gray-300">{benefit}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
-
-          <div className="text-center">
-            <BookAppointmentButton className="mx-auto" />
           </div>
         </div>
       </div>

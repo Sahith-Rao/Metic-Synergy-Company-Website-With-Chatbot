@@ -39,7 +39,7 @@ const Portfolio: React.FC = () => {
       currentStep++;
       
       setCounts({
-        years: Math.min(10, Math.floor((10 * currentStep) / steps)),
+        years: 1, // Always show 1 year
         satisfaction: Math.min(100, Math.floor((100 * currentStep) / steps)),
         traffic: Math.min(90, Math.floor((90 * currentStep) / steps))
       });
@@ -116,19 +116,19 @@ const Portfolio: React.FC = () => {
         {/* Stats Section */}
         <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-24 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
           <div className="text-center">
-            <h3 className="text-5xl md:text-6xl font-bold text-purple-400 mb-2">
+            <h3 className="text-5xl md:text-6xl font-bold text-white mb-2">
               {counts.years}+
             </h3>
             <p className="text-gray-400 text-lg">Years of Experience</p>
           </div>
           <div className="text-center">
-            <h3 className="text-5xl md:text-6xl font-bold text-purple-400 mb-2">
+            <h3 className="text-5xl md:text-6xl font-bold text-white mb-2">
               {counts.satisfaction}%
             </h3>
             <p className="text-gray-400 text-lg">Client Satisfaction</p>
           </div>
           <div className="text-center">
-            <h3 className="text-5xl md:text-6xl font-bold text-purple-400 mb-2">
+            <h3 className="text-5xl md:text-6xl font-bold text-white mb-2">
               {counts.traffic}%
             </h3>
             <p className="text-gray-400 text-lg">Traffic Raised</p>
@@ -144,7 +144,7 @@ const Portfolio: React.FC = () => {
           {clientReviews.map((review, index) => (
             <div 
               key={index}
-              className={`bg-gray-900/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-800 hover:border-purple-500 transition-all duration-500 transform hover:scale-105 ${
+              className={`bg-gray-900/50 backdrop-blur-lg rounded-2xl p-8 border border-gray-800 hover:border-white/50 transition-all duration-500 transform hover:scale-105 ${
                 isVisible ? `fade-in delay-${(index + 1) * 200}` : 'opacity-0'
               }`}
             >
@@ -157,7 +157,7 @@ const Portfolio: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2 text-purple-400">{review.name}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-white">{review.name}</h3>
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <span 
