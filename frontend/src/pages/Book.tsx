@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FlickeringGrid } from '../components/FlickeringGrid';
-import { Calendar, Clock, Mail, Phone, User, Building } from 'lucide-react';
+import { Mail, Phone, User, Building } from 'lucide-react';
+import CalendarSelector from '../components/CalendarSelector';
 import styled from 'styled-components';
 import { useBooking } from '../contexts/BookingContext';
 
@@ -137,35 +138,13 @@ const Book: React.FC = () => {
                 </select>
               </div>
               
-              <div className="date-time-container">
-                <div className="form-group date-group">
-                  <label htmlFor="date">
-                    <Calendar className="icon" /> Date
-                  </label>
-                  <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    min={new Date().toISOString().split('T')[0]}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group time-group">
-                  <label htmlFor="time">
-                    <Clock className="icon" /> Time
-                  </label>
-                  <input
-                    type="time"
-                    id="time"
-                    name="time"
-                    value={formData.time}
-                    onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                    required
-                  />
-                </div>
+              <div className="calendar-container">
+                <CalendarSelector
+                  selectedDate={formData.date}
+                  selectedTime={formData.time}
+                  onDateSelect={(date) => setFormData({ ...formData, date })}
+                  onTimeSelect={(time) => setFormData({ ...formData, time })}
+                />
               </div>
               
               <button className="form-submit-btn" type="submit">
@@ -214,6 +193,12 @@ const StyledWrapper = styled.div`
     gap: 2px;
   }
 
+  .calendar-container {
+    width: 100%;
+    margin: 16px 0;
+  }
+
+  /* Keep these for backward compatibility, can be removed later */
   .date-time-container {
     display: flex;
     gap: 20px;
