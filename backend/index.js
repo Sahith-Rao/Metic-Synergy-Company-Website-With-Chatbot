@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 const FRONTEND_URL = process.env.FRONTEND_URL || '*';
 
-// Enhanced CORS configuration
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || FRONTEND_URL === '*' || FRONTEND_URL.split(',').includes(origin)) {
@@ -26,11 +26,11 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Enhanced body parser
+
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
-// MongoDB connection with better options
+
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -40,7 +40,7 @@ mongoose.connect(MONGO_URI, {
 .then(() => console.log('MongoDB connected successfully'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// Health check endpoint
+
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'healthy',
@@ -49,7 +49,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Survey responses endpoint
+
 app.post('/api/survey-responses', async (req, res) => {
   try {
     const { name, email, answers } = req.body;
@@ -81,7 +81,7 @@ app.post('/api/survey-responses', async (req, res) => {
   }
 });
 
-// Existing booking endpoint
+
 app.post('/api/bookings', async (req, res) => {
   try {
     const { name, phone, email, date, time, company, service } = req.body;
@@ -128,7 +128,7 @@ app.post('/api/bookings', async (req, res) => {
   }
 });
 
-// Error handling middleware
+
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   res.status(500).json({ 
@@ -141,7 +141,7 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// Handle shutdown gracefully
+
 process.on('SIGTERM', () => {
   console.log('SIGTERM received. Shutting down gracefully');
   server.close(() => {
