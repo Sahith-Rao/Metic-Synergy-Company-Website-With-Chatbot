@@ -48,8 +48,12 @@ const InitialForm: React.FC = () => {
           Get Started
         </h1>
         
-        <p className="text-center text-gray-300 mb-8">
+        <p className="text-center text-gray-300 mb-2">
           Please provide your information to begin your journey with us.
+        </p>
+        
+        <p className="text-center text-xl md:text-2xl font-bold mb-8 bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text transform hover:scale-105 transition-all duration-300 px-4 py-2">
+          Want to increase your marketing sales by 30 percent in a month?
         </p>
         
         <div className="w-full max-w-md mx-auto">
