@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FlickeringGrid } from '../components/FlickeringGrid';
+import { submitSurvey } from '../utils/api';
 
 interface FormData {
   name: string;
@@ -24,23 +25,18 @@ const InitialForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Store form data in localStorage to access it on the survey and video page if needed
     localStorage.setItem('userFormData', JSON.stringify(formData));
-    // Navigate to the survey page
     navigate('/survey');
   };
 
   return (
     <div className="bg-black min-h-screen flex flex-col items-center justify-center text-white relative py-12 px-4">
-      {/* Background effects */}
       <FlickeringGrid 
         color="#ffffff" 
         className="absolute inset-0 z-0" 
         maxOpacity={0.15}
         flickerChance={0.1}
       />
-      
-      {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black/90 z-1"></div>
       
       <div className="z-10 max-w-xl mx-auto w-full">

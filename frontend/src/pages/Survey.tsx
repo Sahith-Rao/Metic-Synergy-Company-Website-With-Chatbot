@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FlickeringGrid } from '../components/FlickeringGrid';
+import { submitSurvey } from '../utils/api';
 
 interface Question {
   id: number;
@@ -49,14 +50,15 @@ const questions: Question[] = [
       'More than ₹7,50,000 per month (More than $10,000)'
     ],
   },
+
 ];
 
 const Survey: React.FC = () => {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Get user data from localStorage
   const userFormData = localStorage.getItem('userFormData') 
     ? JSON.parse(localStorage.getItem('userFormData') || '{}') 
     : null;
@@ -68,33 +70,42 @@ const Survey: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     
-    // Store survey answers in localStorage
-    localStorage.setItem('surveyAnswers', JSON.stringify(answers));
-    
-    // Navigate to video page
-    setTimeout(() => {
+    try {
+      if (!userFormData?.name || !userFormData?.email) {
+        throw new Error('Missing user information');
+      }
+
+      localStorage.setItem('surveyAnswers', JSON.stringify(answers));
+      
+      await submitSurvey({
+        name: userFormData.name,
+        email: userFormData.email,
+        answers
+      });
+
       navigate('/video');
-    }, 1000);
+    } catch (err) {
+      console.error('Survey submission error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to submit survey');
+      setIsSubmitting(false);
+    }
   };
 
-  // Check if all questions are answered
   const allQuestionsAnswered = questions.every(q => answers[q.id] !== undefined);
 
   return (
     <div className="bg-black min-h-screen flex flex-col items-center justify-start text-white relative py-12 px-4">
-      {/* Background effects */}
       <FlickeringGrid 
         color="#ffffff" 
         className="absolute inset-0 z-0" 
         maxOpacity={0.15}
         flickerChance={0.1}
       />
-      
-      {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-black/90 z-1"></div>
       
       <div className="z-10 max-w-4xl mx-auto w-full">
@@ -113,8 +124,14 @@ const Survey: React.FC = () => {
           </div>
         )}
         
+        {error && (
+          <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-lg text-center">
+            <p className="text-red-200">{error}</p>
+            <p className="text-sm text-red-300 mt-1">Please try again or contact support</p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* All survey questions */}
           {questions.map((question) => (
             <div 
               key={question.id} 
@@ -150,7 +167,6 @@ const Survey: React.FC = () => {
             </div>
           ))}
           
-          {/* Submit button */}
           <div className="flex justify-center mt-8 pb-12">
             <button
               type="submit"
