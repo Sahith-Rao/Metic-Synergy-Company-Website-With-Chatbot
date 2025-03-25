@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const services = [
     { name: 'Digital Marketing', path: '/services/digital-marketing' },
@@ -19,7 +21,16 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
+    // Check if admin is logged in
+    const adminToken = localStorage.getItem('adminToken');
+    setIsAdmin(!!adminToken);
   }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    setIsAdmin(false);
+    navigate('/');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-gray-800">
@@ -32,15 +43,15 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/" className={`text-gray-300 hover:text-white transition-colors ${location.pathname === '/' ? 'text-white font-medium' : ''}`}>
               Home
             </Link>
-            <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/about" className={`text-gray-300 hover:text-white transition-colors ${location.pathname === '/about' ? 'text-white font-medium' : ''}`}>
               About
             </Link>
             <div className="relative group">
               <button 
-                className="text-gray-300 hover:text-white transition-colors flex items-center"
+                className={`text-gray-300 hover:text-white transition-colors flex items-center ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
                 onClick={() => setIsServicesOpen(!isServicesOpen)}
               >
                 Services
@@ -51,19 +62,38 @@ const Header: React.FC = () => {
                   <Link
                     key={index}
                     to={service.path}
-                    className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                    className={`block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 first:rounded-t-lg last:rounded-b-lg transition-colors ${location.pathname === service.path ? 'text-white bg-gray-800' : ''}`}
                   >
                     {service.name}
                   </Link>
                 ))}
               </div>
             </div>
-            <Link to="/portfolio" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/portfolio" className={`text-gray-300 hover:text-white transition-colors ${location.pathname === '/portfolio' ? 'text-white font-medium' : ''}`}>
               Portfolio
             </Link>
-            <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/contact" className={`text-gray-300 hover:text-white transition-colors ${location.pathname === '/contact' ? 'text-white font-medium' : ''}`}>
               Contact
             </Link>
+            
+            {/* Admin Link */}
+            {isAdmin ? (
+              <>
+                <Link to="/admin/dashboard" className="text-gray-300 hover:text-white transition-colors">
+                  Dashboard
+                </Link>
+                <button 
+                  onClick={handleLogout}
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link to="/admin/login" className="text-gray-300 hover:text-white transition-colors">
+                Admin
+              </Link>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -78,15 +108,21 @@ const Header: React.FC = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className="md:hidden py-4">
-            <Link to="/" className="block py-2 text-gray-300 hover:text-white">
+            <Link 
+              to="/" 
+              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/' ? 'text-white font-medium' : ''}`}
+            >
               Home
             </Link>
-            <Link to="/about" className="block py-2 text-gray-300 hover:text-white">
+            <Link 
+              to="/about" 
+              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/about' ? 'text-white font-medium' : ''}`}
+            >
               About
             </Link>
             <div>
               <button 
-                className="flex items-center w-full py-2 text-gray-300 hover:text-white"
+                className={`flex items-center w-full py-2 text-gray-300 hover:text-white ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
                 onClick={() => setIsServicesOpen(!isServicesOpen)}
               >
                 Services
@@ -98,7 +134,7 @@ const Header: React.FC = () => {
                     <Link
                       key={index}
                       to={service.path}
-                      className="block py-2 text-gray-400 hover:text-white"
+                      className={`block py-2 text-gray-400 hover:text-white ${location.pathname === service.path ? 'text-white font-medium' : ''}`}
                     >
                       {service.name}
                     </Link>
@@ -106,12 +142,43 @@ const Header: React.FC = () => {
                 </div>
               )}
             </div>
-            <Link to="/portfolio" className="block py-2 text-gray-300 hover:text-white">
+            <Link 
+              to="/portfolio" 
+              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/portfolio' ? 'text-white font-medium' : ''}`}
+            >
               Portfolio
             </Link>
-            <Link to="/contact" className="block py-2 text-gray-300 hover:text-white">
+            <Link 
+              to="/contact" 
+              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/contact' ? 'text-white font-medium' : ''}`}
+            >
               Contact
             </Link>
+            
+            {/* Mobile Admin Link */}
+            {isAdmin ? (
+              <>
+                <Link 
+                  to="/admin/dashboard" 
+                  className="block py-2 text-gray-300 hover:text-white"
+                >
+                  Dashboard
+                </Link>
+                <button 
+                  onClick={handleLogout}
+                  className="block py-2 text-gray-300 hover:text-white w-full text-left"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link 
+                to="/admin/login" 
+                className="block py-2 text-gray-300 hover:text-white"
+              >
+                Admin
+              </Link>
+            )}
           </nav>
         )}
       </div>

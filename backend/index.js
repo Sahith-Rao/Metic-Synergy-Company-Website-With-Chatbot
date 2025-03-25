@@ -6,6 +6,9 @@ const cors = require('cors');
 const { sendThankYouEmail } = require('./services/emailService');
 const Booking = require('./models/Booking');
 const SurveyResponse = require('./models/SurveyResponse');
+const Admin = require('./models/Admin');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -150,6 +153,87 @@ process.on('SIGTERM', () => {
       process.exit(0);
     });
   });
+});
+
+// Admin Login
+app.post('/api/admin/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    
+    // 1. Input validation
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
+    }
+
+    // 2. Find admin user
+    const admin = await Admin.findOne({ username });
+    if (!admin) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // 3. Verify password
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // 4. Create JWT token
+    const token = jwt.sign(
+      { id: admin._id }, 
+      process.env.JWT_SECRET || 'your_fallback_secret_key',
+      { expiresIn: '1h' }
+    );
+
+    // 5. Send successful response
+    res.json({ 
+      token,
+      admin: {
+        id: admin._id,
+        username: admin.username
+      }
+    });
+
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'Server error during authentication' });
+  }
+});
+
+// Protected admin routes
+app.get('/api/admin/stats', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'Unauthorized' });
+
+    jwt.verify(token, process.env.JWT_SECRET);
+    
+    // Get survey stats
+    const stats = await SurveyResponse.aggregate([
+      // Your aggregation pipeline for stats
+    ]);
+    
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get appointments
+app.get('/api/admin/appointments', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'Unauthorized' });
+
+    jwt.verify(token, process.env.JWT_SECRET);
+    
+    const appointments = await Booking.find()
+      .sort({ date: 1, time: 1 })
+      .lean();
+    
+    res.json(appointments);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 module.exports = app;
