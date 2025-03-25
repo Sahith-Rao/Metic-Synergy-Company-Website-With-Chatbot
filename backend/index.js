@@ -226,9 +226,24 @@ app.get('/api/admin/appointments', async (req, res) => {
 
     jwt.verify(token, process.env.JWT_SECRET);
     
-    const appointments = await Booking.find()
-      .sort({ date: 1, time: 1 })
-      .lean();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Start of today
+    
+    const appointments = await Booking.find({
+      $or: [
+        { 
+          date: { 
+            $gt: today.toISOString() // Future dates
+          } 
+        },
+        { 
+          date: today.toISOString(), // Today's date
+          time: { $gte: new Date().toLocaleTimeString('en-US', { hour12: false }) } // Current time or later
+        }
+      ]
+    })
+    .sort({ date: 1, time: 1 }) // Sort by date then time
+    .lean();
     
     res.json(appointments);
   } catch (err) {
