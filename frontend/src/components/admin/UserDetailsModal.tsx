@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-interface User {
+interface UserResponse {
   _id: string;
   name: string;
   email: string;
@@ -12,7 +12,7 @@ interface User {
 interface UserDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  users: User[];
+  users: UserResponse[];
   option: string;
 }
 
@@ -56,11 +56,11 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
                   Users who selected: {option}
                 </Dialog.Title>
                 <div className="mt-4">
-                  <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
-                    {users.length === 0 ? (
-                      <p className="text-gray-400">No users found for this selection</p>
-                    ) : (
-                      users.map((user) => (
+                  {users.length === 0 ? (
+                    <p className="text-gray-400">No users found for this selection</p>
+                  ) : (
+                    <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+                      {users.map((user) => (
                         <div key={user._id} className="bg-gray-700/50 rounded-lg p-4">
                           <div className="flex justify-between items-start">
                             <div>
@@ -68,18 +68,10 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
                               <p className="text-gray-300 text-sm">{user.email}</p>
                             </div>
                           </div>
-                          <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {Object.entries(user.answers).map(([questionId, answer]) => (
-                              <div key={questionId} className="text-sm">
-                                <span className="text-gray-400">Q{questionId}: </span>
-                                <span className="text-gray-200">{answer}</span>
-                              </div>
-                            ))}
-                          </div>
                         </div>
-                      ))
-                    )}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-6 flex justify-end">

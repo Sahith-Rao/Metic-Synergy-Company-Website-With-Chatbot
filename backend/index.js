@@ -9,7 +9,7 @@ const SurveyResponse = require('./models/SurveyResponse');
 const Admin = require('./models/Admin');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
+const surveyQuestions = require('./constants/surveyQuestions');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -200,21 +200,42 @@ app.post('/api/admin/login', async (req, res) => {
 });
 
 // Protected admin routes
-app.get('/api/admin/stats', async (req, res) => {
+app.get('/api/admin/survey-stats', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
-
+    
     jwt.verify(token, process.env.JWT_SECRET);
+
+    const allResponses = await SurveyResponse.find({});
     
-    // Get survey stats
-    const stats = await SurveyResponse.aggregate([
-      // Your aggregation pipeline for stats
-    ]);
-    
+    const stats = {
+      totalResponses: allResponses.length,
+      questionStats: surveyQuestions.map(q => ({
+        questionId: q.id,
+        questionText: q.question,
+        options: q.options.map(option => ({
+          text: option,
+          count: allResponses.filter(r => r.answers[q.id] === option).length
+        }))
+      }))
+    };
+
     res.json(stats);
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Failed to get survey stats' });
+  }
+});
+
+app.get('/api/admin/survey-responses/:questionId/:option', async (req, res) => {
+  try {
+    const { questionId, option } = req.params;
+    const responses = await SurveyResponse.find({
+      [`answers.${questionId}`]: option
+    });
+    res.json(responses);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to get responses' });
   }
 });
 
