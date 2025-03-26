@@ -34,20 +34,20 @@ export default function ContactPage() {
             <div className="space-y-4">
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-white mr-3" />
-                <a href="mailto:hello@meticsynergy.com" className="text-gray-300 hover:text-white transition-colors">
-                  hello@meticsynergy.com
+                <a href="mailto:meticsynergy@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+                  meticsynergy@gmail.com
                 </a>
               </div>
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-white mr-3" />
                 <a href="tel:+1234567890" className="text-gray-300 hover:text-white transition-colors">
-                  +1 (234) 567-890
+                +91 93988 87054
                 </a>
               </div>
               <div className="flex items-center">
                 <MapPin className="w-5 h-5 text-white mr-3" />
                 <span className="text-gray-300">
-                  123 Creative Avenue, Digital District<br />
+                 
                   Hyderabad, India
                 </span>
               </div>
@@ -60,12 +60,7 @@ export default function ContactPage() {
               <p className="text-gray-300">
                 <span className="font-medium text-white">Monday - Friday:</span> 9:00 AM - 6:00 PM
               </p>
-              <p className="text-gray-300">
-                <span className="font-medium text-white">Saturday:</span> 10:00 AM - 4:00 PM
-              </p>
-              <p className="text-gray-300">
-                <span className="font-medium text-white">Sunday:</span> Closed
-              </p>
+             
               <p className="mt-4 text-gray-300">
                 We typically respond to all inquiries within 24 hours during business days.
               </p>
