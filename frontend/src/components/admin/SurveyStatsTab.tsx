@@ -18,7 +18,15 @@ interface UserResponse {
   answers: Record<string, string>;
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
+const COLORS = [
+  '#6366f1', // indigo
+  '#10b981', // emerald
+  '#f59e0b', // amber
+  '#ef4444', // red
+  '#8b5cf6', // violet
+  '#ec4899', // pink
+  '#14b8a6', // teal
+];
 
 const SurveyStatsTab: React.FC = () => {
   const [stats, setStats] = useState<SurveyStat[]>([]);
@@ -30,6 +38,7 @@ const SurveyStatsTab: React.FC = () => {
   } | null>(null);
   const [users, setUsers] = useState<UserResponse[]>([]);
   const [chartType, setChartType] = useState<'bar' | 'pie'>('bar');
+  const [hoveredBar, setHoveredBar] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -77,37 +86,60 @@ const SurveyStatsTab: React.FC = () => {
       <div className="flex justify-end mb-4">
         <button
           onClick={() => setChartType(prev => prev === 'bar' ? 'pie' : 'bar')}
-          className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+          className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
         >
           Switch to {chartType === 'bar' ? 'Pie' : 'Bar'} Charts
         </button>
       </div>
 
       {stats.map((question) => (
-        <div key={question.questionId} className="bg-gray-800 rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4">{question.questionText}</h3>
+        <div key={question.questionId} className="bg-gray-800 rounded-lg p-6" style={{ background: 'rgb(31, 41, 55)' }}>
+          <h3 className="text-xl font-semibold mb-4 text-white">{question.questionText}</h3>
           
           <div className="h-80 mb-6">
             <ResponsiveContainer width="100%" height="100%">
               {chartType === 'bar' ? (
                 <BarChart data={question.options}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" />
-                  <XAxis dataKey="text" stroke="#9ca3af" />
-                  <YAxis stroke="#9ca3af" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" opacity={0.3} />
+                  <XAxis 
+                    dataKey="text" 
+                    stroke="#9ca3af" 
+                    tick={{ fontSize: 12 }}
+                  />
+                  <YAxis 
+                    stroke="#9ca3af" 
+                    tick={{ fontSize: 12 }}
+                  />
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: '#1f2937',
-                      borderColor: '#4b5563'
-                    }} 
+                      borderColor: '#4b5563',
+                      borderRadius: '0.5rem',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                    }}
+                    itemStyle={{ color: '#f3f4f6' }}
+                    labelStyle={{ color: '#9ca3af', fontWeight: 'bold' }}
+                    cursor={{ fill: 'rgba(107, 114, 128, 0.1)' }}
                   />
                   <Legend />
                   <Bar 
                     dataKey="count" 
-                    name="Responses" 
-                    fill="#6366f1" 
+                    name="Responses"
                     onClick={(data) => handleOptionClick(question.questionId, data.text)}
                     cursor="pointer"
-                  />
+                    radius={[4, 4, 0, 0]}
+                    onMouseOver={(data) => setHoveredBar(data.text)}
+                    onMouseLeave={() => setHoveredBar(null)}
+                  >
+                    {question.options.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                        opacity={hoveredBar === null || hoveredBar === entry.text ? 1 : 0.5}
+                        className="transition-opacity duration-200"
+                      />
+                    ))}
+                  </Bar>
                 </BarChart>
               ) : (
                 <PieChart>
@@ -132,7 +164,8 @@ const SurveyStatsTab: React.FC = () => {
                   <Tooltip 
                     contentStyle={{ 
                       backgroundColor: '#1f2937',
-                      borderColor: '#4b5563'
+                      borderColor: '#4b5563',
+                      borderRadius: '0.5rem'
                     }} 
                   />
                   <Legend />
@@ -148,8 +181,8 @@ const SurveyStatsTab: React.FC = () => {
                 className="bg-gray-700 p-4 rounded-lg hover:bg-gray-600 transition cursor-pointer"
                 onClick={() => handleOptionClick(question.questionId, option.text)}
               >
-                <h4 className="font-medium">{option.text}</h4>
-                <p>{option.count} responses</p>
+                <h4 className="font-medium text-white">{option.text}</h4>
+                <p className="text-gray-300">{option.count} responses</p>
               </div>
             ))}
           </div>
