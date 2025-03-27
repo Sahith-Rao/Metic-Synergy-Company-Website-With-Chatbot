@@ -21,7 +21,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
-    // Check if admin is logged in
+    
     const adminToken = localStorage.getItem('adminToken');
     setIsAdmin(!!adminToken);
   }, [location]);
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
             <span className="text-white font-bold text-xl">METIC-SYNERGY</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className={`text-gray-300 hover:text-white transition-colors ${location.pathname === '/' ? 'text-white font-medium' : ''}`}>
               Home
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
               Contact
             </Link>
             
-            {/* Admin Link */}
+            
             {isAdmin ? (
               <>
                 <Link to="/admin/dashboard" className="text-gray-300 hover:text-white transition-colors">
@@ -96,7 +96,7 @@ const Header: React.FC = () => {
             )}
           </nav>
 
-          {/* Mobile Menu Button */}
+          
           <button
             className="md:hidden text-gray-300 hover:text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        
         {isMenuOpen && (
           <nav className="md:hidden py-4">
             <Link 
@@ -155,7 +155,7 @@ const Header: React.FC = () => {
               Contact
             </Link>
             
-            {/* Mobile Admin Link */}
+            
             {isAdmin ? (
               <>
                 <Link 

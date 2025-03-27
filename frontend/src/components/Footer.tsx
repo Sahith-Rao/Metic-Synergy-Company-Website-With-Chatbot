@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
   ];
 
   const handleUsefulLinkClick = (path: string) => {
-    // If it's a hash link, handle smooth scrolling
+    
     if (path.includes('#')) {
       const sectionId = path.split('#')[1];
       const element = document.getElementById(sectionId);
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Company Info */}
+          
           <div>
             <h3 className="text-xl font-bold mb-4">METIC-SYNERGY</h3>
             <p className="text-gray-400 mb-4">
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Useful Links */}
+      
           <div>
             <h3 className="text-xl font-bold mb-4">Useful Links</h3>
             <ul className="space-y-2">
@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          
           <div>
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
             <div className="space-y-4">

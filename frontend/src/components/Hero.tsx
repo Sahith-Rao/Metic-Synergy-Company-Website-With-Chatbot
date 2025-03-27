@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
     navigate('/initial-form');
   };
 
-  // Modern blue-toned cityscape background with glass skyscrapers
+  
   const cityBackgroundUrl = "https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2800&q=80";
 
   return (
@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {/* Content container with improved contrast */}
+      
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/50 z-0"></div>
       
       <div className="z-10 w-full container pl-8 sm:pl-12 md:pl-16">

@@ -21,45 +21,45 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
   const [customTime, setCustomTime] = useState(selectedTime || '');
   
 
-  // Initialize timezone
+  
   useEffect(() => {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     setTimeZone(timezone);
   }, []);
 
-  // Update selectedDateObj when selectedDate changes
+  
   useEffect(() => {
     if (selectedDate) {
       setSelectedDateObj(new Date(selectedDate));
     }
   }, [selectedDate]);
 
-  // Navigate to previous month
+  
   const prevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
   };
 
-  // Navigate to next month
+  
   const nextMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
   };
 
-  // Format month name and year
+  
   const formatMonthYear = (date: Date) => {
     return date.toLocaleString('default', { month: 'long', year: 'numeric' });
   };
 
-  // Get days in month
+  
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
   };
 
-  // Get day of week for first day of month (0 = Sunday, 1 = Monday, etc.)
+  
   const getFirstDayOfMonth = (year: number, month: number) => {
     return new Date(year, month, 1).getDay();
   };
 
-  // Check if a date is today
+  
   const isToday = (date: Date) => {
     const today = new Date();
     return date.getDate() === today.getDate() &&
@@ -67,7 +67,7 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
       date.getFullYear() === today.getFullYear();
   };
 
-  // Check if a date is selected
+  
   const isSelected = (date: Date) => {
     if (!selectedDateObj) return false;
     return date.getDate() === selectedDateObj.getDate() &&
@@ -75,7 +75,7 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
       date.getFullYear() === selectedDateObj.getFullYear();
   };
 
-  // Check if a date is in the past
+  
   const isPastDate = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -83,15 +83,14 @@ const CalendarSelector: React.FC<CalendarSelectorProps> = ({
     return date < today;
   };
 
-  // Handle date selection
-  // In CalendarSelector.tsx, update the handleDateSelect function:
+ 
 const handleDateSelect = (day: number) => {
   const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
   if (isPastDate(new Date(selected))) return;
   
   setSelectedDateObj(selected);
   
-  // Fix: Use local date string instead of ISO string to avoid timezone issues
+  
   const year = selected.getFullYear();
   const month = String(selected.getMonth() + 1).padStart(2, '0');
   const dayOfMonth = String(selected.getDate()).padStart(2, '0');
@@ -100,29 +99,29 @@ const handleDateSelect = (day: number) => {
   onDateSelect(formattedDate);
 };
 
-  // Handle time selection
+ 
   const handleTimeSelect = (time: string) => {
     onTimeSelect(time);
   };
 
-  // Render calendar days
+  
   const renderCalendarDays = () => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
     const daysInMonth = getDaysInMonth(year, month);
     const firstDay = getFirstDayOfMonth(year, month);
 
-    // Adjust for week starting on Monday
+    
     const firstDayAdjusted = firstDay === 0 ? 6 : firstDay - 1;
     
     const days = [];
     
-    // Add empty cells for days before the first day of the month
+    
     for (let i = 0; i < firstDayAdjusted; i++) {
       days.push(<EmptyCell key={`empty-${i}`} />);
     }
     
-    // Add cells for each day of the month
+   
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const isPast = isPastDate(new Date(date));
@@ -176,7 +175,7 @@ const handleDateSelect = (day: number) => {
         </DaysGrid>
         </CalendarWrapper>
 
-        {/* Always show time selection regardless of date selection */}
+        
         <TimeSelectionWrapper>
         <TimeSelectionHeader>
           <h3>Select a Time</h3>
@@ -215,7 +214,7 @@ const handleDateSelect = (day: number) => {
   );
 };
 
-// Styled Components
+
 const CalendarContainer = styled.div`
   background-color: transparent;
   border-radius: 8px;
@@ -422,7 +421,7 @@ const TimeZoneSelector = styled.div`
 `;
 
 
-// New styled components for time selection
+
 const TimeSelectionFlexible = styled.div`
   display: flex;
   justify-content: space-between;

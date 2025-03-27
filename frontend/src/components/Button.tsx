@@ -7,7 +7,6 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ onClick, color, children }) => {
-  // Create conditional styling based on color - with updated professional theme
   const getButtonStyles = () => {
     if (color === "white") {
       return `cursor-pointer bg-white px-12 py-3 rounded-lg border-0 text-slate-800 font-medium shadow-md hover:shadow-lg hover:bg-gray-100 transition-all duration-300`;

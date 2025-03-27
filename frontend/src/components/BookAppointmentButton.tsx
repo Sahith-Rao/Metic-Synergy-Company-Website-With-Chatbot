@@ -26,7 +26,7 @@ const BookAppointmentButton: React.FC<BookAppointmentButtonProps> = ({ className
           Book an Appointment
         </span>
         
-        {/* Glow effect */}
+        
         <div className="absolute inset-0 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-500">
           <div className="absolute inset-0 rounded-full bg-white/40 blur-xl animate-pulse"></div>
         </div>

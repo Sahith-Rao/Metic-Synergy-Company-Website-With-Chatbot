@@ -9,7 +9,6 @@ const TeamMemberCard = ({ member }) => {
       <h3 className="text-xl font-semibold text-center text-glow">
         {member.name}
       </h3>
-      {/* ... rest of the card content ... */}
     </div>
   );
 }; 

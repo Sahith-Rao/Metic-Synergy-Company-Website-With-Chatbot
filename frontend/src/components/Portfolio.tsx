@@ -29,7 +29,7 @@ const Portfolio: React.FC = () => {
   }, []);
 
   const startCounting = () => {
-    const duration = 2000; // 2 seconds
+    const duration = 2000; 
     const steps = 50;
     const stepTime = duration / steps;
 
@@ -39,7 +39,7 @@ const Portfolio: React.FC = () => {
       currentStep++;
       
       setCounts({
-        years: 1, // Always show 1 year
+        years: 1,
         satisfaction: Math.min(100, Math.floor((100 * currentStep) / steps)),
         traffic: Math.min(90, Math.floor((90 * currentStep) / steps))
       });
@@ -113,7 +113,7 @@ const Portfolio: React.FC = () => {
   return (
     <section ref={sectionRef} id="portfolio" className="py-16 sm:py-20 md:py-24 bg-black text-white">
       <div className="container mx-auto px-4">
-        {/* Stats Section */}
+        
         <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-24 ${isVisible ? 'fade-in' : 'opacity-0'}`}>
           <div className="text-center">
             <h3 className="text-5xl md:text-6xl font-bold text-white mb-2">
@@ -135,7 +135,7 @@ const Portfolio: React.FC = () => {
           </div>
         </div>
 
-        {/* Testimonials Section */}
+       
         <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 ${isVisible ? 'slide-in-right' : 'opacity-0'}`}>
           WHAT OUR CLIENTS SAY
         </h2>

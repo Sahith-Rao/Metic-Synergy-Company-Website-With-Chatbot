@@ -18,12 +18,12 @@ const ChatBot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
-  // Scroll to bottom of messages when new messages are added
+  
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
   
-  // Focus input when chat is opened
+  
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
@@ -48,14 +48,14 @@ const ChatBot: React.FC = () => {
     }
   };
   
-  // Function to render message text with proper formatting for paragraphs
+  
   const renderMessageText = (text: string) => {
     return text.split('\n').map((paragraph, index) => (
       <p key={index} className={index > 0 ? 'mt-2' : ''}>{paragraph}</p>
     ));
   };
 
-  // Render booking button based on the chat stage
+  
   const renderBookingButton = () => {
     if (chatStep === 'lead') {
       return (
@@ -72,7 +72,7 @@ const ChatBot: React.FC = () => {
 
   return (
     <>
-      {/* Chat toggle button - fixed at the bottom right corner */}
+      
       {!isOpen && (
         <button
           onClick={toggleChat}
@@ -86,10 +86,10 @@ const ChatBot: React.FC = () => {
         </button>
       )}
 
-      {/* Chat window - only shown when isOpen is true */}
+      
       {isOpen && (
         <div className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] max-h-[80vh] bg-slate-900 border border-slate-700 rounded-lg shadow-2xl z-50 flex flex-col overflow-hidden">
-          {/* Chat header */}
+          
           <div className="bg-slate-800 px-4 py-3 flex items-center justify-between border-b border-slate-700">
             <div className="flex items-center">
               <Bot className="text-blue-400 mr-2 w-5 h-5" />
@@ -110,7 +110,7 @@ const ChatBot: React.FC = () => {
             </div>
           </div>
 
-          {/* Chat messages */}
+          
           <div className="flex-1 overflow-y-auto p-4 bg-slate-900">
             <div className="space-y-4">
               {messages.map((message) => (
@@ -132,7 +132,7 @@ const ChatBot: React.FC = () => {
                 </div>
               ))}
 
-              {/* Typing indicator */}
+              
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="max-w-[85%] p-3 rounded-lg bg-slate-800 text-slate-200 flex items-center">
@@ -142,7 +142,7 @@ const ChatBot: React.FC = () => {
                 </div>
               )}
               
-              {/* Error message */}
+              
               {error && (
                 <div className="flex justify-center">
                   <div className="p-2 rounded-lg bg-red-900/30 text-red-200 text-sm flex items-center">
@@ -152,14 +152,14 @@ const ChatBot: React.FC = () => {
                 </div>
               )}
 
-              {/* Booking button when in lead stage */}
+              
               {renderBookingButton()}
 
               <div ref={messagesEndRef} />
             </div>
           </div>
 
-          {/* Chat input */}
+          
           <form onSubmit={handleSubmit} className="p-3 bg-slate-800 border-t border-slate-700">
             <div className="flex items-center">
               <input

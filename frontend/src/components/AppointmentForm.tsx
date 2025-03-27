@@ -16,7 +16,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ isOpen, onClose }) =>
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log('Form submitted', {
       name,
       contactNumber,

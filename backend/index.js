@@ -155,36 +155,36 @@ process.on('SIGTERM', () => {
   });
 });
 
-// Admin Login
+
 app.post('/api/admin/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     
-    // 1. Input validation
+    
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password are required' });
     }
 
-    // 2. Find admin user
+  
     const admin = await Admin.findOne({ username });
     if (!admin) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // 3. Verify password
+   
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // 4. Create JWT token
+   
     const token = jwt.sign(
       { id: admin._id }, 
       process.env.JWT_SECRET || 'your_fallback_secret_key',
       { expiresIn: '1h' }
     );
 
-    // 5. Send successful response
+    
     res.json({ 
       token,
       admin: {
@@ -199,7 +199,7 @@ app.post('/api/admin/login', async (req, res) => {
   }
 });
 
-// Protected admin routes
+
 app.get('/api/admin/survey-stats', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -239,7 +239,7 @@ app.get('/api/admin/survey-responses/:questionId/:option', async (req, res) => {
   }
 });
 
-// Get appointments
+
 app.get('/api/admin/appointments', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
@@ -248,22 +248,22 @@ app.get('/api/admin/appointments', async (req, res) => {
     jwt.verify(token, process.env.JWT_SECRET);
     
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Start of today
+    today.setHours(0, 0, 0, 0); 
     
     const appointments = await Booking.find({
       $or: [
         { 
           date: { 
-            $gt: today.toISOString() // Future dates
+            $gt: today.toISOString()
           } 
         },
         { 
-          date: today.toISOString(), // Today's date
-          time: { $gte: new Date().toLocaleTimeString('en-US', { hour12: false }) } // Current time or later
+          date: today.toISOString(), 
+          time: { $gte: new Date().toLocaleTimeString('en-US', { hour12: false }) } 
         }
       ]
     })
-    .sort({ date: 1, time: 1 }) // Sort by date then time
+    .sort({ date: 1, time: 1 }) 
     .lean();
     
     res.json(appointments);

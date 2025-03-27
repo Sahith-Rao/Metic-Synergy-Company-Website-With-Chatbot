@@ -147,12 +147,12 @@ const BookingModal: React.FC = () => {
                 required
                 value={formData.date}
                 onChange={(e) => {
-                  // Ensure we're using the local date value
+                  
                   setFormData({ ...formData, date: e.target.value });
                 }}
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white
                           transition-colors duration-300"
-                min={new Date().toLocaleDateString('en-CA')} // Use locale-specific format
+                min={new Date().toLocaleDateString('en-CA')} 
               />
             </div>
 

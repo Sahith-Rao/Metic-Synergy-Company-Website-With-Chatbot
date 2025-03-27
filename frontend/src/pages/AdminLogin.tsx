@@ -5,13 +5,13 @@ const AdminLogin: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // New loading state
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
-    setError(''); // Clear previous errors
+    setIsLoading(true); 
+    setError('');
     
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`, {
@@ -31,7 +31,7 @@ const AdminLogin: React.FC = () => {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
-      setIsLoading(false); // Stop loading whether successful or not
+      setIsLoading(false); 
     }
   };
 
@@ -53,7 +53,7 @@ const AdminLogin: React.FC = () => {
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-3 py-2 bg-gray-700 text-white rounded"
               required
-              disabled={isLoading} // Disable during loading
+              disabled={isLoading} 
             />
           </div>
           <div className="mb-6">
@@ -64,13 +64,13 @@ const AdminLogin: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 bg-gray-700 text-white rounded"
               required
-              disabled={isLoading} // Disable during loading
+              disabled={isLoading} 
             />
           </div>
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded flex items-center justify-center"
-            disabled={isLoading} // Disable during loading
+            disabled={isLoading} 
           >
             {isLoading ? (
               <>

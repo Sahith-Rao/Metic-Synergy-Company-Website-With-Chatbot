@@ -6,12 +6,12 @@ const ClientMarquee: React.FC = () => {
     { name: "Ravrani Developers", logo: "/ravrani.png.jpg" },
     { name: "Futbol X Decathlon", logo: "/futbol.png" },
     { name: "Sphoorthy Restaurant", logo: "/SPHOORTHY (1).jpg" },
-    // Add more clients as needed
+    
   ];
 
   return (
     <section className="py-20 bg-black relative overflow-hidden">
-      {/* Animated Background */}
+      
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-gray-300/10 animate-gradient"></div>
         <div className="absolute top-1/2 left-1/4 w-1/2 h-1/2 bg-white/20 rounded-full blur-3xl animate-pulse"></div>
@@ -23,13 +23,13 @@ const ClientMarquee: React.FC = () => {
         </h2>
 
         <div className="relative">
-          {/* Gradient Overlays */}
+          
           <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-black to-transparent z-10"></div>
           <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-black to-transparent z-10"></div>
 
-          {/* Marquee Container */}
+          
           <div className="overflow-hidden relative">
-            {/* First copy of logos */}
+            
             <div className="flex space-x-12 animate-marquee whitespace-nowrap">
               {clients.map((client, index) => (
                 <div
@@ -48,7 +48,7 @@ const ClientMarquee: React.FC = () => {
                   </div>
                 </div>
               ))}
-              {/* Duplicate set for seamless loop */}
+              
               {clients.map((client, index) => (
                 <div
                   key={`second-${index}`}
@@ -74,20 +74,5 @@ const ClientMarquee: React.FC = () => {
   );
 };
 
-// Add this to your tailwind.config.js content array
-//'./src/**/*.{js,jsx,ts,tsx}',
-
-// Add this inside the extend key in tailwind.config.js
-/*
-keyframes: {
-  marquee: {
-    '0%': { transform: 'translateX(0%)' },
-    '100%': { transform: 'translateX(-100%)' },
-  },
-},
-animation: {
-  marquee: 'marquee 20s linear infinite',
-},
-*/
 
 export default ClientMarquee;

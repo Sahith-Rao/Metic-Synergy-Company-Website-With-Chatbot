@@ -19,13 +19,13 @@ interface UserResponse {
 }
 
 const COLORS = [
-  '#6366f1', // indigo
-  '#10b981', // emerald
-  '#f59e0b', // amber
-  '#ef4444', // red
-  '#8b5cf6', // violet
-  '#ec4899', // pink
-  '#14b8a6', // teal
+  '#6366f1', 
+  '#10b981', 
+  '#f59e0b', 
+  '#ef4444', 
+  '#8b5cf6', 
+  '#ec4899', 
+  '#14b8a6', 
 ];
 
 const SurveyStatsTab: React.FC = () => {

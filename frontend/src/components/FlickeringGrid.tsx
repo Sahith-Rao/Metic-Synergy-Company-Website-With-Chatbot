@@ -17,7 +17,6 @@ interface FlickeringGridProps extends React.HTMLAttributes<HTMLDivElement> {
   maxOpacity?: number;
 }
 
-// Simple cn implementation since lib/utils is not available
 function cn(...classes: (string | undefined | null | boolean)[]) {
     return classes.filter(Boolean).join(' ');
 }
