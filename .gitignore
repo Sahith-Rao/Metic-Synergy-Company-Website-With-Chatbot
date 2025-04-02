@@ -1,34 +1,41 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Frontend files (from frontend/.gitignore)
+/frontend/logs
+/frontend/*.log
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+/frontend/lerna-debug.log*
 
-# Node modules
-node_modules
+/frontend/node_modules
+/frontend/dist
+/frontend/dist-ssr
+/frontend/*.local
 
-# Build outputs
-dist
-dist-ssr
+# Frontend editor files
+/frontend/.vscode/*
+!/frontend/.vscode/extensions.json
+/frontend/.idea
+/frontend/.DS_Store
+/frontend/*.suo
+/frontend/*.ntvs*
+/frontend/*.njsproj
+/frontend/*.sln
+/frontend/*.sw?
 
-# Local environment files
-frontend/.env
-backend/.env
+# Frontend environment files
+/frontend/.env
+/frontend/.env.*
+/frontend/.env.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Backend files
+/backend/node_modules
+/backend/.env
+/backend/.env.*
+/backend/.env.local
+
+# General files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Frontend-specific exclusions
-frontend/node_modules
-frontend/*.local
+.idea
+.vscode
+*.log
