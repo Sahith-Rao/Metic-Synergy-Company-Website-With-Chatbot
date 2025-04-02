@@ -7,10 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
 node_modules
+
+# Build outputs
 dist
 dist-ssr
-*.local
+
+# Local environment files
+frontend/.env
+backend/.env
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +28,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Frontend-specific exclusions
+frontend/node_modules
+frontend/*.local
