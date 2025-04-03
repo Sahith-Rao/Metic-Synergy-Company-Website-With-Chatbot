@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -20,9 +21,9 @@ import ContentCreation from './pages/services/ContentCreation';
 import Survey from './pages/Survey';
 import VideoPage from './pages/VideoPage';
 import InitialForm from './pages/InitialForm';
-import { useState, useEffect } from 'react';
+import ScrollToTop from './ScrollToTop';  
 
-// Admin Components (add these to your pages folder)
+// Admin Components
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AppointmentsTab from './components/admin/AppointmentsTab';
@@ -41,7 +42,6 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
       }
 
       try {
-        // You could add an API call here to verify the token if needed
         setIsAuthenticated(true);
       } catch (err) {
         localStorage.removeItem('adminToken');
@@ -64,6 +64,7 @@ function App() {
     <BookingProvider>
       <ChatBotProvider>
         <Router>
+          <ScrollToTop />
           <div className="min-h-screen text-white relative bg-black">
             <Header />
             <main>
