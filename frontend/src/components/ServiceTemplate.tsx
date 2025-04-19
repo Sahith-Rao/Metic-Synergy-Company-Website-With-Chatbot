@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import BookAppointmentButton from './BookAppointmentButton';
 import OptimizedImage from './OptimizedImage';
+import { ServiceSchema, BreadcrumbSchema } from './StructuredData';
 
 interface ServiceTemplateProps {
   title: string;
@@ -102,8 +103,29 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
       }
     };
   }, [title, description, image]);
+  // Generate service URL from title for schema
+  const serviceUrl = `https://meticsynergy.com/services/${title.toLowerCase().replace(/\s+/g, '-')}`;
+  
   return (
     <section className="py-20 bg-black text-white">
+      {/* Schema.org structured data for service */}
+      <ServiceSchema
+        name={title}
+        description={description}
+        provider="Metic Synergy"
+        url={serviceUrl}
+        image={image}
+        area="Hyderabad, India"
+      />
+      
+      {/* Breadcrumb schema */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://meticsynergy.com/" },
+          { name: "Services", url: "https://meticsynergy.com/services" },
+          { name: title, url: serviceUrl }
+        ]}
+      />
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">{title}</h1>
@@ -123,6 +145,7 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
             </p>
           </div>
 
+          {/* Add a semantic list for benefits with proper HTML structure */}
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-8 border border-white/20">
               <h2 className="text-2xl font-bold mb-6 text-white">What We Offer</h2>

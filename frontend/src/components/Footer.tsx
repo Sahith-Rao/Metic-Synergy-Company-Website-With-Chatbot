@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Mail, MapPin } from 'lucide-react';
+import { OrganizationSchema } from './StructuredData';
 
 const Footer: React.FC = () => {
   const usefulLinks = [
@@ -25,6 +26,23 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-gray-900 text-white py-12">
+      {/* Schema.org structured data for organization */}
+      <OrganizationSchema 
+        name="Metic Synergy"
+        logo="https://meticsynergy.com/new_logo.png"
+        url="https://meticsynergy.com"
+        description="Digital marketing, photography and creative advertising agency specializing in brand development, content creation, and social media strategy."
+        email="meticsynergy@gmail.com"
+        address={{
+          city: "Hyderabad",
+          country: "India"
+        }}
+        sameAs={[
+          "https://instagram.com/meticsynergy",
+          "https://twitter.com/meticsynergy",
+          "https://linkedin.com/company/meticsynergy"
+        ]}
+      />
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
