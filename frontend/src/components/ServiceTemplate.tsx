@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BookAppointmentButton from './BookAppointmentButton';
+import OptimizedImage from './OptimizedImage';
 
 interface ServiceTemplateProps {
   title: string;
@@ -16,6 +17,91 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
   benefits,
   image
 }) => {
+  // Add SEO metadata for service pages
+  useEffect(() => {
+    // Set document title
+    document.title = `${title} | Metic Synergy`;
+    
+    // Create and add meta tags
+    const metaTags = [
+      {
+        name: 'description',
+        content: description.substring(0, 160) // Keep meta description under 160 chars
+      },
+      // Open Graph tags for social sharing
+      {
+        property: 'og:title',
+        content: `${title} | Metic Synergy`
+      },
+      {
+        property: 'og:description',
+        content: description.substring(0, 200)
+      },
+      {
+        property: 'og:type',
+        content: 'website'
+      },
+      {
+        property: 'og:url',
+        content: `https://meticsynergy.com/services/${title.toLowerCase().replace(/\s+/g, '-')}`
+      },
+      {
+        property: 'og:image',
+        content: image
+      },
+      // Twitter Card tags
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image'
+      },
+      {
+        name: 'twitter:title',
+        content: `${title} | Metic Synergy`
+      },
+      {
+        name: 'twitter:description',
+        content: description.substring(0, 200)
+      },
+      {
+        name: 'twitter:image',
+        content: image
+      }
+    ];
+    
+    // Add canonical URL
+    let canonicalLink = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.href = `https://meticsynergy.com/services/${title.toLowerCase().replace(/\s+/g, '-')}`;
+    
+    // Add all meta tags
+    const addedTags = metaTags.map(tag => {
+      const metaTag = document.createElement('meta');
+      Object.entries(tag).forEach(([attr, value]) => {
+        metaTag.setAttribute(attr, value);
+      });
+      document.head.appendChild(metaTag);
+      return metaTag;
+    });
+    
+    // Clean up function
+    return () => {
+      // Remove all added meta tags
+      addedTags.forEach(tag => {
+        if (document.head.contains(tag)) {
+          document.head.removeChild(tag);
+        }
+      });
+      
+      // Only remove canonical if we created it
+      if (document.head.contains(canonicalLink)) {
+        document.head.removeChild(canonicalLink);
+      }
+    };
+  }, [title, description, image]);
   return (
     <section className="py-20 bg-black text-white">
       <div className="container mx-auto px-4">
@@ -23,10 +109,14 @@ const ServiceTemplate: React.FC<ServiceTemplateProps> = ({
           <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">{title}</h1>
           
           <div className="mb-12">
-            <img 
+            <OptimizedImage 
               src={image} 
-              alt={title} 
-              className="w-full h-64 md:h-96 object-cover rounded-2xl mb-8"
+              alt={title}
+              width={1170}
+              height={384}
+              className="w-full h-64 md:h-96 rounded-2xl mb-8"
+              objectFit="cover"
+              priority={true} // Service image is above the fold
             />
             <p className="text-lg text-gray-300 leading-relaxed mb-8">
               {description}

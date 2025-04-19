@@ -1,11 +1,96 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlickeringGrid } from '../components/FlickeringGrid';
 import { Mail, Phone, MapPin, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { FlipText } from '../registry/magicui/flip-text';
 
 export default function ContactPage() {
+  // Add SEO metadata
+  useEffect(() => {
+    // Set document title
+    document.title = 'Contact Us | Metic Synergy';
+    
+    // Create and add meta tags
+    const metaTags = [
+      {
+        name: 'description',
+        content: 'Get in touch with Metic Synergy. Contact our team for digital marketing, creative services, and brand development solutions in Hyderabad, India.'
+      },
+      // Open Graph tags for social sharing
+      {
+        property: 'og:title',
+        content: 'Contact Us | Metic Synergy'
+      },
+      {
+        property: 'og:description',
+        content: 'Get in touch with Metic Synergy. Contact our team for digital marketing, creative services, and brand development solutions in Hyderabad, India.'
+      },
+      {
+        property: 'og:type',
+        content: 'website'
+      },
+      {
+        property: 'og:url',
+        content: 'https://meticsynergy.com/contact'
+      },
+      {
+        property: 'og:image',
+        content: 'https://meticsynergy.com/new_logo.png'
+      },
+      // Twitter Card tags
+      {
+        name: 'twitter:card',
+        content: 'summary'
+      },
+      {
+        name: 'twitter:title',
+        content: 'Contact Us | Metic Synergy'
+      },
+      {
+        name: 'twitter:description',
+        content: 'Get in touch with Metic Synergy. Contact our team for digital marketing, creative services, and brand development solutions.'
+      },
+      {
+        name: 'twitter:image',
+        content: 'https://meticsynergy.com/new_logo.png'
+      }
+    ];
+    
+    // Add canonical URL
+    let canonicalLink = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.href = 'https://meticsynergy.com/contact';
+    
+    // Add all meta tags
+    const addedTags = metaTags.map(tag => {
+      const metaTag = document.createElement('meta');
+      Object.entries(tag).forEach(([attr, value]) => {
+        metaTag.setAttribute(attr, value);
+      });
+      document.head.appendChild(metaTag);
+      return metaTag;
+    });
+    
+    // Clean up function
+    return () => {
+      // Remove all added meta tags
+      addedTags.forEach(tag => {
+        if (document.head.contains(tag)) {
+          document.head.removeChild(tag);
+        }
+      });
+      
+      // Only remove canonical if we created it
+      if (document.head.contains(canonicalLink)) {
+        document.head.removeChild(canonicalLink);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen px-4 sm:px-6 py-8 sm:py-12 relative"

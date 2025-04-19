@@ -10,6 +10,7 @@ import ChatBot from './components/ChatBot';
 import { ChatBotProvider } from './contexts/ChatBotContext';
 import Contact from './pages/Contact';
 import Book from './pages/Book';
+import NotFound from './pages/NotFound';
 import { BookingProvider } from './contexts/BookingContext';
 import BookingModal from './components/BookingModal';
 import DigitalMarketing from './pages/services/DigitalMarketing';
@@ -101,8 +102,8 @@ function App() {
                   <Route path="survey-stats" element={<SurveyStatsTab />} />
                 </Route>
 
-                {/* 404 Redirect */}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                {/* 404 Page */}
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <Footer />

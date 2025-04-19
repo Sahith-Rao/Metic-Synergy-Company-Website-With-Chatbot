@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Calendar } from 'lucide-react';
 import BookAppointmentButton from './BookAppointmentButton';
+import OptimizedImage from './OptimizedImage';
 
 const Portfolio: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -150,10 +151,13 @@ const Portfolio: React.FC = () => {
             >
               <div className="flex items-start gap-6 mb-6">
                 <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-white/10">
-                  <img 
+                  <OptimizedImage 
                     src={review.logo}
                     alt={`${review.name} logo`}
-                    className="w-full h-full object-contain p-2"
+                    width={80}
+                    height={80}
+                    className="p-2"
+                    objectFit="contain"
                   />
                 </div>
                 <div>

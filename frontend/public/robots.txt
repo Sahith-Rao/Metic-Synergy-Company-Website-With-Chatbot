@@ -1,0 +1,10 @@
+# Metic Synergy robots.txt
+# https://meticsynergy.com/
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin/*
+
+# Sitemaps
+Sitemap: https://meticsynergy.com/sitemap.xml

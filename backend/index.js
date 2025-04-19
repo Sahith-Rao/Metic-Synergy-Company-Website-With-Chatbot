@@ -16,6 +16,32 @@ const MONGO_URI = process.env.MONGO_URI;
 const FRONTEND_URL = process.env.FRONTEND_URL || '*';
 
 
+// Add security headers middleware
+const securityHeaders = (req, res, next) => {
+  // Protect against XSS attacks
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  
+  // Prevent MIME type sniffing
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  
+  // Control iframe embedding (prevents clickjacking)
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  
+  // Enable strict HTTPS (uncomment in production)
+  // res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  
+  // Basic Content Security Policy
+  res.setHeader('Content-Security-Policy', "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'");
+  
+  // Remove X-Powered-By header
+  res.removeHeader('X-Powered-By');
+  
+  next();
+};
+
+// Apply security headers to all routes
+app.use(securityHeaders);
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || FRONTEND_URL === '*' || FRONTEND_URL.split(',').includes(origin)) {
