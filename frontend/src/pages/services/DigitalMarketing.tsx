@@ -20,10 +20,6 @@ const DigitalMarketing: React.FC = () => {
     {
       question: "Do you offer industry-specific digital marketing strategies?",
       answer: "Yes, we develop customized strategies for each client based on their industry, competition, target audience, and business objectives. We conduct thorough market research to identify the most effective channels and approaches for your specific sector."
-    },
-    {
-      question: "How much should I budget for digital marketing services?",
-      answer: "Digital marketing budgets vary based on your goals, competition, and market size. We offer flexible packages starting at ₹30,000 per month for small businesses, with comprehensive enterprise solutions available. We work with you to allocate resources to the channels with the highest potential return for your specific situation."
     }
   ];
 
