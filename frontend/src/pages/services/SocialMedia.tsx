@@ -7,7 +7,7 @@ const SocialMedia: React.FC = () => {
   const faqItems = [
     {
       question: "Which social media platforms should my business focus on?",
-      answer: "The ideal platforms depend on your target audience demographics and business goals. Instagram and TikTok excel for visual products and younger audiences, LinkedIn is essential for B2B companies, Facebook remains valuable for broad reach and community building, and Twitter/X provides real-time engagement opportunities. Our social media management services include audience analysis to determine the optimal platform mix for your specific business."
+      answer: "The ideal platforms depend on your target audience demographics and business goals. Instagram excels for visual products and younger audiences, LinkedIn is essential for B2B companies, Facebook remains valuable for broad reach and community building, and Twitter/X provides real-time engagement opportunities. Our social media management services include audience analysis to determine the optimal platform mix for your specific business."
     },
     {
       question: "How often should we post on social media platforms?",
@@ -92,12 +92,7 @@ const SocialMedia: React.FC = () => {
                   <strong>LinkedIn content strategy</strong> delivers 2.74x more effective lead generation compared to traditional platforms
                 </span>
               </li>
-              <li className="flex items-start">
-                <span className="text-blue-400 mr-2">•</span>
-                <span className="text-gray-300">
-                  <strong>TikTok organic reach</strong> outperforms all other platforms with an average of 118% (meaning content reaches more users than the account has followers)
-                </span>
-              </li>
+              
             </ul>
           </div>
           
