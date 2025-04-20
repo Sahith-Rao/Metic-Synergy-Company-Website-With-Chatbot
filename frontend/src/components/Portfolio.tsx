@@ -84,28 +84,33 @@ const Portfolio: React.FC = () => {
     }
   ];
 
+  // Optimized client reviews with WebP images and size constraints
   const clientReviews = [
     {
       name: "FIGURING OUT BY JAY",
-      logo: "/FIGURING OUT BY JAY (1).png",
+      logo: "/FIGURING OUT BY JAY.webp", // WebP version
+      logoFallback: "/FIGURING OUT BY JAY (1).png", // Fallback for browsers without WebP support
       rating: 4,
       testimonial: "MeticSynergy's editing and content strategy amplified our reach with algorithm-optimized videos. Their creative approach helped us engage viewers and grow our channel faster."
     },
     {
       name: "RAVRANI DEVELOPERS",
-      logo: "/ravrani.png.jpg",
+      logo: "/ravrani.webp", // WebP version (optimized to max 40 KiB as specified)
+      logoFallback: "/ravrani.png.jpg",
       rating: 5,
       testimonial: "MeticSynergy enhanced our digital presence with expert marketing strategies, making our projects more visible and attracting quality leads. Their approach significantly improved client engagement and brand credibility."
     },
     {
       name: "FUTBOL X DECATHLON",
-      logo: "/futbol.png",
+      logo: "/futbol.webp", // WebP version
+      logoFallback: "/futbol.png",
       rating: 5,
       testimonial: "Capturing high-intensity football action, MeticSynergy delivered professional photography for official tournaments. While Futbol Syndicate's events showcased our agility, Decathlon's collaboration demanded precision and specialized expertise, proving our adaptability in sports photography."
     },
     {
       name: "SPHOORTHY RESTAURANT",
-      logo: "/SPHOORTHY (1).jpg",
+      logo: "/SPHOORTHY.webp", // WebP version (optimized to max 100 KiB as specified)
+      logoFallback: "/SPHOORTHY (1).jpg",
       rating: 5,
       testimonial: "MeticSynergy transformed our online presence with a sleek design and seamless user experience. Their intuitive approach boosted our reservations and strengthened customer engagement."
     }
@@ -158,6 +163,9 @@ const Portfolio: React.FC = () => {
                     height={80}
                     className="p-2"
                     objectFit="contain"
+                    fallbackSrc={review.logoFallback}
+                    webpSrc={review.logo}
+                    sizes="80px"
                   />
                 </div>
                 <div>
@@ -167,6 +175,7 @@ const Portfolio: React.FC = () => {
                       <span 
                         key={i}
                         className={`text-2xl ${i < review.rating ? 'text-yellow-400' : 'text-gray-600'}`}
+                        aria-hidden={i >= review.rating ? 'true' : undefined}
                       >
                         ★
                       </span>

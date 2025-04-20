@@ -57,14 +57,16 @@ const Footer: React.FC = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Follow Metic Synergy on Instagram"
               >
-                <Instagram />
+                <Instagram aria-hidden="true" />
               </a>
               <a 
                 href="mailto:meticsynergy@gmail.com"
                 className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Email Metic Synergy"
               >
-                <Mail />
+                <Mail aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -98,8 +100,9 @@ const Footer: React.FC = () => {
               <a 
                 href="mailto:meticsynergy@gmail.com"
                 className="flex items-center text-gray-400 hover:text-white transition-colors"
+                aria-label="Contact Metic Synergy via email"
               >
-                <Mail className="mr-2" />
+                <Mail className="mr-2" aria-hidden="true" />
                 meticsynergy@gmail.com
               </a>
             </div>

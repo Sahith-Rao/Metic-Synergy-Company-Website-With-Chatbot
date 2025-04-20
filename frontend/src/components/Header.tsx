@@ -50,12 +50,15 @@ const Header: React.FC = () => {
               About
             </Link>
             <div className="relative group">
-              <button 
-                className={`text-gray-300 hover:text-white transition-colors flex items-center ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
-                onClick={() => setIsServicesOpen(!isServicesOpen)}
-              >
-                Services
-                <ChevronDown className="ml-1 w-4 h-4" />
+          <button 
+            className={`text-gray-300 hover:text-white transition-colors flex items-center ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
+            onClick={() => setIsServicesOpen(!isServicesOpen)}
+            aria-expanded={isServicesOpen}
+            aria-haspopup="true"
+            aria-controls="services-menu"
+          >
+            <span>Services</span>
+            <ChevronDown className="ml-1 w-4 h-4" aria-hidden="true" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-64 bg-gray-900 rounded-lg shadow-xl border border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                 {services.map((service, index) => (
@@ -100,14 +103,17 @@ const Header: React.FC = () => {
           <button
             className="md:hidden text-gray-300 hover:text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
-            {isMenuOpen ? <X /> : <Menu />}
+            {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
         </div>
 
         
         {isMenuOpen && (
-          <nav className="md:hidden py-4">
+          <nav className="md:hidden py-4" id="mobile-menu">
             <Link 
               to="/" 
               className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/' ? 'text-white font-medium' : ''}`}
@@ -124,12 +130,18 @@ const Header: React.FC = () => {
               <button 
                 className={`flex items-center w-full py-2 text-gray-300 hover:text-white ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
                 onClick={() => setIsServicesOpen(!isServicesOpen)}
+                aria-expanded={isServicesOpen}
+                aria-haspopup="true"
+                aria-controls="mobile-services-menu"
               >
-                Services
-                <ChevronDown className={`ml-1 w-4 h-4 transform transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                <span>Services</span>
+                <ChevronDown 
+                  className={`ml-1 w-4 h-4 transform transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} 
+                  aria-hidden="true"
+                />
               </button>
               {isServicesOpen && (
-                <div className="pl-4">
+                <div className="pl-4" id="mobile-services-menu">
                   {services.map((service, index) => (
                     <Link
                       key={index}
