@@ -2,47 +2,107 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/new_logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Metic Synergy crafts powerful brand narratives through design, photography, and digital campaigns. Discover our mission and partners." />
     <title>Metic Synergy</title>
     
-    <!-- Preload critical fonts to prevent render blocking -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" as="style" />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" as="style" />
+    <!-- Preconnect to domains before any other requests -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    
+    <!-- Favicon with preload -->
+    <link rel="preload" href="/new_logo.png" as="image" fetchpriority="high" />
+    <link rel="icon" type="image/png" href="/new_logo.png" />
+    
+    <!-- Critical Font Preloading (mobile-optimized subsets) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&text=METICSYNGR" as="style" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap&text=METICSYNGR" as="style" />
     <link rel="preload" href="/fonts/JEFFE___.TTF" as="font" type="font/ttf" crossorigin />
     
-    <!-- Preload LCP image - the logo or hero image -->
-    <link rel="preload" href="/new_logo.png" as="image" />
+    <!-- Optimized font loading strategy -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" media="print" onload="this.media='all'" />
     
-    <!-- Load fonts after preloading -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@400;600&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Fallback for browsers with JS disabled -->
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    </noscript>
     
-    <!-- Inline critical CSS to eliminate render blocking -->
+    <!-- Extended inline critical CSS for LCP optimization -->
     <style>
       /* CSS variables */
       :root {
         --letterstich-font: 'Letterstich plain regular', sans-serif;
+        --text-primary: #ffffff;
+        --bg-primary: #000000;
+        --bg-secondary: #111111;
+        --accent-color: #3b82f6; /* blue-500 */
+      }
+      
+      /* Base styles */
+      * {
+        box-sizing: border-box;
       }
       
       /* Critical above-the-fold styles */
       body {
         margin: 0;
         padding: 0;
-        font-family: 'Montserrat', sans-serif;
-        background-color: #000;
-        color: #fff;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.5;
+        text-rendering: optimizeSpeed;
       }
       
-      /* Prevent content jumps - LCP elements */
-      h1 {
+      /* Main heading - the LCP element */
+      h1, .h1 {
         font-family: 'Oswald', sans-serif;
         font-weight: 600;
-        margin: 0;
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin: 0 0 1rem;
         padding: 0;
+        content-visibility: auto;
       }
       
-      /* Loading state for content */
+      /* Header styles for quick rendering */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background-color: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #333;
+        height: 64px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Container */
+      .container {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      
+      /* Layout stability */
+      main {
+        margin-top: 64px; /* Header height */
+      }
+      
+      /* Image optimization */
+      img {
+        height: auto;
+        max-width: 100%;
+        display: block;
+      }
+      
+      /* Content placeholder styles */
       .loading-placeholder {
         background-color: rgba(255, 255, 255, 0.1);
         animation: pulse 1.5s infinite;
@@ -54,26 +114,31 @@
         100% { opacity: 0.6; }
       }
       
-      /* Layout stabilization for common components */
-      header, main, footer {
-        width: 100%;
+      /* Button styles for hero section */
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 0.25rem;
+        transition: all 0.2s;
+        cursor: pointer;
       }
       
-      /* Prevent CLS on images */
-      img {
-        height: auto;
-        max-width: 100%;
+      .btn-primary {
+        background-color: var(--accent-color);
+        color: white;
       }
     </style>
+    
+    <!-- Preload critical JS -->
+    <link rel="modulepreload" href="/src/main.tsx" />
   </head>
   <body>
+    <!-- Page shell for instant rendering -->
     <div id="root"></div>
-    <!-- Use module type and defer non-critical scripts -->
-    <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Preconnect to external resource domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://images.unsplash.com" />
+    <!-- Modern script loading strategy -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -50,7 +50,12 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     if (src.startsWith('http')) {
       // For remote images like Unsplash, we can use their sizing parameters
       if (src.includes('unsplash.com')) {
-        return `${src}&w=640 640w, ${src}&w=960 960w, ${src}&w=1280 1280w, ${src}&w=1920 1920w`;
+        // Support WebP format in Unsplash URLs if already specified
+        if (src.includes('fm=webp')) {
+          return `${src.replace('w=600', 'w=400')} 400w, ${src} 600w, ${src.replace('w=600', 'w=800')} 800w`;
+        } else {
+          return `${src}&w=640 640w, ${src}&w=960 960w, ${src}&w=1280 1280w, ${src}&w=1920 1920w`;
+        }
       }
       
       // For other remote images, we can't generate srcSet automatically
@@ -191,6 +196,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
             onLoad={handleLoad}
             onError={handleError}
             style={imgStyle}
+            fetchPriority={priority ? 'high' : 'auto'} // Use fetchPriority for critical images
             decoding={priority ? 'sync' : 'async'} // Optimize decoding strategy
           />
         </picture>
@@ -206,6 +212,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           onLoad={handleLoad}
           onError={handleError}
           style={imgStyle}
+          fetchPriority={priority ? 'high' : 'auto'} // Use fetchPriority for critical images
           decoding={priority ? 'sync' : 'async'} // Optimize decoding strategy
         />
       )}
