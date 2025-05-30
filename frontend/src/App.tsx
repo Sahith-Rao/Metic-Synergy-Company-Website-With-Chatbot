@@ -7,8 +7,7 @@ import { BookingProvider } from './contexts/BookingContext';
 import { ChatBotProvider } from './contexts/ChatBotContext';
 import ScrollToTop from './ScrollToTop';
 
-// Eagerly load only the most critical components needed for initial render
-// All other components are lazy-loaded to reduce initial bundle size
+
 
 // Lazy-loaded primary pages (still high priority but not needed for LCP)
 const About = lazy(() => import('./pages/About'));
@@ -18,7 +17,6 @@ const Book = lazy(() => import('./pages/Book'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Portfolio = lazy(() => import('./components/Portfolio'));
 
-// Lazy-loaded service pages (lower priority, load only when user navigates to specific service)
 const DigitalMarketing = lazy(() => import('./pages/services/DigitalMarketing'));
 const Photography = lazy(() => import('./pages/services/Photography'));
 const Videography = lazy(() => import('./pages/services/Videography'));
@@ -26,14 +24,12 @@ const BrandDevelopment = lazy(() => import('./pages/services/BrandDevelopment'))
 const SocialMedia = lazy(() => import('./pages/services/SocialMedia'));
 const ContentCreation = lazy(() => import('./pages/services/ContentCreation'));
 
-// Lazy-loaded non-critical features
 const Survey = lazy(() => import('./pages/Survey'));
 const VideoPage = lazy(() => import('./pages/VideoPage'));
 const InitialForm = lazy(() => import('./pages/InitialForm'));
 const BookingModal = lazy(() => import('./components/BookingModal'));
 const ChatBot = lazy(() => import('./components/ChatBot'));
 
-// Admin components bundle (separate chunk, rarely used by regular visitors)
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const AppointmentsTab = lazy(() => import('./components/admin/AppointmentsTab'));
@@ -94,20 +90,20 @@ function App() {
           <div className="min-h-screen text-white relative bg-black">
             <Header />
             <main>
-              {/* Wrap routes in Suspense to handle lazy loading */}
+              
               <Suspense fallback={<PageLoadingFallback />}>
                 <Routes>
-                  {/* Home route is eagerly loaded for fastest LCP */}
+                  {/* Home route */}
                   <Route path="/" element={<Home />} />
                   
-                  {/* Primary pages - lazy loaded but high priority */}
+                  {/* Primary pages */}
                   <Route path="/about" element={<About />} />
                   <Route path="/services" element={<Services />} />
                   <Route path="/portfolio" element={<Portfolio />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/book" element={<Book />} />
                   
-                  {/* Service-specific pages - lazy loaded, lower priority */}
+                  {/* Service-specific pages */}
                   <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
                   <Route path="/services/photography" element={<Photography />} />
                   <Route path="/services/videography" element={<Videography />} />
@@ -115,12 +111,11 @@ function App() {
                   <Route path="/services/social-media" element={<SocialMedia />} />
                   <Route path="/services/content-creation" element={<ContentCreation />} />
                   
-                  {/* Infrequently used pages */}
                   <Route path="/initial-form" element={<InitialForm />} />
                   <Route path="/survey" element={<Survey />} />
                   <Route path="/video" element={<VideoPage />} />
 
-                  {/* Admin Routes - separate code chunk */}
+                  {/* Admin Routes */}
                   <Route path="/admin/login" element={<AdminLogin />} />
                   <Route
                     path="/admin/dashboard"
@@ -141,7 +136,7 @@ function App() {
               </Suspense>
             </main>
             <Footer />
-            {/* Lazy load interactive components with separate Suspense boundary */}
+            
             <Suspense fallback={null}>
               <BookingModal />
               <ChatBot />
