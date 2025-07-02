@@ -118,7 +118,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 Metic Synergy - [contact@meticsynergy.com](mailto:contact@meticsynergy.com)
 
-Project Link: [https://github.com/your-username/metic-synergy](https://github.com/your-username/metic-synergy)
+Project Link: [https://github.com/your-username/metic-synergy](https://github.com/sreevallabh04/metic-synergy)
 
 ---
 
