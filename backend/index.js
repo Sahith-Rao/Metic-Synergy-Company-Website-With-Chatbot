@@ -59,6 +59,13 @@ mongoose.connect(MONGO_URI, {
 .then(() => console.log('MongoDB connected successfully'))
 .catch(err => console.error('MongoDB connection error:', err));
 
+// RAG routes
+try {
+  const ragRoutes = require('./routes/rag');
+  app.use('/api/rag', ragRoutes);
+} catch (e) {
+  console.error('RAG routes not mounted:', e.message);
+}
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({
