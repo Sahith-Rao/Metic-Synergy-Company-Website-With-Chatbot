@@ -1,23 +1,20 @@
+
 const path = require('path');
 const { listFilesRecursive, readFileSafe, stripTsxToText, extractRouteFromPath } = require('./utils');
 
-// Import Cohere correctly with the new SDK
-const { CohereClient } = require('cohere-ai');
-
-// Initialize Cohere client
-const cohere = new CohereClient({
-  token: process.env.COHERE_API_KEY,
-});
-
 async function embedTexts(texts) {
+  const { CohereClient } = require('cohere-ai');
+  const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
+
   const maxRetries = 4;
   const baseDelayMs = 500;
-  const batchSize = 90; // Cohere allows fairly large batches
+  const batchSize = 50; // moderate batch size for stability
   const allEmbeddings = [];
 
   for (let i = 0; i < texts.length; i += batchSize) {
     const batch = texts.slice(i, i + batchSize);
 
+    let batchOk = false;
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         const res = await cohere.embed({
@@ -25,44 +22,47 @@ async function embedTexts(texts) {
           model: 'embed-english-v3.0',
           inputType: 'search_document'
         });
-        // cohere v3 returns { embeddings: number[][] }
         allEmbeddings.push(...res.embeddings);
+        batchOk = true;
         break;
       } catch (err) {
-        const isRetryable = err?.statusCode === 429 || err?.statusCode >= 500;
-        if (attempt < maxRetries - 1 && isRetryable) {
+        const status = err?.statusCode || err?.status;
+        const retryable = status === 429 || status >= 500;
+        if (attempt < maxRetries - 1 && retryable) {
           const delay = baseDelayMs * Math.pow(2, attempt);
           await new Promise(r => setTimeout(r, delay));
           continue;
         }
-        // fallback per-item to ensure progress
-        for (const t of batch) {
-          let done = false;
-          for (let a = 0; a < maxRetries; a++) {
-            try {
-              const single = await cohere.embed({
-                texts: [t || ''],
-                model: 'embed-english-v3.0',
-                inputType: 'search_document'
-              });
-              allEmbeddings.push(single.embeddings[0]);
-              done = true;
-              break;
-            } catch (e) {
-              const retryable = e?.statusCode === 429 || e?.statusCode >= 500;
-              if (a < maxRetries - 1 && retryable) {
-                const delay = baseDelayMs * Math.pow(2, a);
-                await new Promise(r => setTimeout(r, delay));
-                continue;
-              }
+        break; // fall back to per-item
+      }
+    }
+
+    if (!batchOk) {
+      for (const t of batch) {
+        let done = false;
+        for (let a = 0; a < maxRetries; a++) {
+          try {
+            const single = await cohere.embed({
+              texts: [t || ''],
+              model: 'embed-english-v3.0',
+              inputType: 'search_document'
+            });
+            allEmbeddings.push(single.embeddings[0]);
+            done = true;
+            break;
+          } catch (e) {
+            const status = e?.statusCode || e?.status;
+            const retryable = status === 429 || status >= 500;
+            if (a < maxRetries - 1 && retryable) {
+              const delay = baseDelayMs * Math.pow(2, a);
+              await new Promise(r => setTimeout(r, delay));
+              continue;
             }
           }
-          if (!done) {
-            // Cohere v3 embeddings are 1024-dim
-            allEmbeddings.push(new Array(1024).fill(0));
-          }
         }
-        break;
+        if (!done) {
+          throw new Error('Failed to embed a chunk; aborting to avoid zero vectors.');
+        }
       }
     }
   }

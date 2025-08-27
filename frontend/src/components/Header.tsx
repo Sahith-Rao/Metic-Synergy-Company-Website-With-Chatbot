@@ -34,7 +34,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-gray-800">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-3">
             <img src="/logo.png" alt="Metic Synergy Logo" className="h-10 w-auto" />
@@ -113,22 +113,22 @@ const Header: React.FC = () => {
 
         
         {isMenuOpen && (
-          <nav className="md:hidden py-4" id="mobile-menu">
+          <nav className="md:hidden absolute left-0 right-0 top-16 bg-black/95 backdrop-blur-lg border-b border-gray-800 py-4 z-40" id="mobile-menu">
             <Link 
               to="/" 
-              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/' ? 'text-white font-medium' : ''}`}
+              className={`block py-2 px-4 text-gray-300 hover:text-white ${location.pathname === '/' ? 'text-white font-medium' : ''}`}
             >
               Home
             </Link>
             <Link 
               to="/about" 
-              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/about' ? 'text-white font-medium' : ''}`}
+              className={`block py-2 px-4 text-gray-300 hover:text-white ${location.pathname === '/about' ? 'text-white font-medium' : ''}`}
             >
               About
             </Link>
             <div>
               <button 
-                className={`flex items-center w-full py-2 text-gray-300 hover:text-white ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
+                className={`flex items-center w-full py-2 px-4 text-gray-300 hover:text-white ${location.pathname.startsWith('/services') ? 'text-white font-medium' : ''}`}
                 onClick={() => setIsServicesOpen(!isServicesOpen)}
                 aria-expanded={isServicesOpen}
                 aria-haspopup="true"
@@ -141,7 +141,7 @@ const Header: React.FC = () => {
                 />
               </button>
               {isServicesOpen && (
-                <div className="pl-4" id="mobile-services-menu">
+                <div className="pl-6" id="mobile-services-menu">
                   {services.map((service, index) => (
                     <Link
                       key={index}
@@ -156,13 +156,13 @@ const Header: React.FC = () => {
             </div>
             <Link 
               to="/portfolio" 
-              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/portfolio' ? 'text-white font-medium' : ''}`}
+              className={`block py-2 px-4 text-gray-300 hover:text-white ${location.pathname === '/portfolio' ? 'text-white font-medium' : ''}`}
             >
               Portfolio
             </Link>
             <Link 
               to="/contact" 
-              className={`block py-2 text-gray-300 hover:text-white ${location.pathname === '/contact' ? 'text-white font-medium' : ''}`}
+              className={`block py-2 px-4 text-gray-300 hover:text-white ${location.pathname === '/contact' ? 'text-white font-medium' : ''}`}
             >
               Contact
             </Link>
@@ -172,13 +172,13 @@ const Header: React.FC = () => {
               <>
                 <Link 
                   to="/admin/dashboard" 
-                  className="block py-2 text-gray-300 hover:text-white"
+                  className="block py-2 px-4 text-gray-300 hover:text-white"
                 >
                   Dashboard
                 </Link>
                 <button 
                   onClick={handleLogout}
-                  className="block py-2 text-gray-300 hover:text-white w-full text-left"
+                  className="block py-2 px-4 text-gray-300 hover:text-white w-full text-left"
                 >
                   Logout
                 </button>
@@ -186,7 +186,7 @@ const Header: React.FC = () => {
             ) : (
               <Link 
                 to="/admin/login" 
-                className="block py-2 text-gray-300 hover:text-white"
+                className="block py-2 px-4 text-gray-300 hover:text-white"
               >
                 Admin
               </Link>

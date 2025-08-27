@@ -18,14 +18,12 @@ class PineconeStore {
       }
     }));
 
-    // Skip deleteAll if index is empty or doesn't exist
     try {
       await this.index.deleteAll();
     } catch (err) {
       console.log('Index may be empty or not exist yet, continuing with upsert...');
     }
     
-    // Upsert in batches of 100
     const batchSize = 100;
     for (let i = 0; i < vectors.length; i += batchSize) {
       const batch = vectors.slice(i, i + batchSize);

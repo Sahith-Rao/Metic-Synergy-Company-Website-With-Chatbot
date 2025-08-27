@@ -41,6 +41,8 @@ interface ChatBotContextState {
   updateUserData: (data: Partial<UserData>) => void;
   resetChat: () => void;
   setChatStep: (step: 'greeting' | 'analyzing' | 'suggestion' | 'budget' | 'lead') => void;
+  needsContact?: boolean;
+  submitContact?: (info: { name: string; email: string; phone?: string }) => Promise<void>;
 }
 
 // Create the context with default values
@@ -60,12 +62,14 @@ export const ChatBotContext = createContext<ChatBotContextState>({
 });
 
 // Create a provider component
-export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ChatBotProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [userData, setUserData] = useState<UserData>({});
   const [isTyping, setIsTyping] = useState(false);
   const [chatStep, setChatStep] = useState<'greeting' | 'analyzing' | 'suggestion' | 'budget' | 'lead'>('greeting');
+  const [needsContact, setNeedsContact] = useState(false);
+  const [pendingQuery, setPendingQuery] = useState<string | null>(null);
 
   // Function to open the chat
   const openChat = () => {
@@ -100,6 +104,33 @@ export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   };
 
+  const isSupportIntent = (text: string) => {
+    const lower = text.toLowerCase();
+    return (
+      lower.includes('pricing') ||
+      lower.includes('quote') ||
+      lower.includes('custom') ||
+      lower.includes('talk to') ||
+      lower.includes('contact support') ||
+      lower.includes('reach out')
+    );
+  };
+
+  const isUnknownAnswer = (answer: string) => /i don't have|not in my context|not in the context|don't know/i.test(answer);
+
+  const parseContact = (text: string): { name?: string; email?: string; phone?: string } => {
+    const emailMatch = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+    const phoneMatch = text.match(/\+?\d[\d\s\-()]{6,}/);
+    const email = emailMatch?.[0];
+    const phone = phoneMatch?.[0]?.trim();
+    let name = text;
+    if (email) name = name.replace(email, '');
+    if (phone) name = name.replace(phone, '');
+    name = name.replace(/[,;:-]+/g, ' ').replace(/\s+/g, ' ').trim();
+    if (name && name.length < 2) name = undefined;
+    return { name, email, phone };
+  };
+
   const sendMessage = async (text: string) => {
     const userMessage: ChatMessage = {
       id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
@@ -108,6 +139,46 @@ export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children })
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMessage]);
+
+    // If awaiting contact details, parse and submit instead of querying RAG
+    if (needsContact) {
+      const { name, email, phone } = parseContact(text);
+      if (!email || !name) {
+        const askAgain: ChatMessage = {
+          id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+          sender: 'bot',
+          text: !email ? 'Please include your email address.' : 'Please include your name.',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, askAgain]);
+        return;
+      }
+      setIsTyping(true);
+      try {
+        await askRag(pendingQuery || 'User requested support', { ...userData, name, email, phone }, [...messages, userMessage]);
+        const confirm: ChatMessage = {
+          id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+          sender: 'bot',
+          text: 'Thanks! Our team will reach out shortly.',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, confirm]);
+        setNeedsContact(false);
+        setPendingQuery(null);
+        updateUserData({ name, email, phone });
+      } catch (e) {
+        const errMsg: ChatMessage = {
+          id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+          sender: 'bot',
+          text: 'Sorry—could not send your details right now. Please try again in a minute.',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errMsg]);
+      } finally {
+        setIsTyping(false);
+      }
+      return;
+    }
 
     setIsTyping(true);
     analyzeMessage(text);
@@ -121,6 +192,18 @@ export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children })
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, botMessage]);
+
+      if (isUnknownAnswer(rag.answer) || isSupportIntent(text)) {
+        setPendingQuery(text);
+        setNeedsContact(true);
+        const askContact: ChatMessage = {
+          id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+          sender: 'bot',
+          text: 'I can connect you with our team. Please reply with your name, email, and phone (optional).',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, askContact]);
+      }
     } catch (error) {
       const fail: ChatMessage = {
         id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
@@ -135,7 +218,35 @@ export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children })
     updateChatStepFromContent(text);
   };
 
-  // Helper function to update chat step based on message content
+  // Submit contact info to backend to trigger email
+  const submitContact = async (info: { name: string; email: string; phone?: string }) => {
+    if (!pendingQuery) return;
+    setIsTyping(true);
+    try {
+      await askRag(pendingQuery, { ...userData, ...info }, messages);
+      const confirm: ChatMessage = {
+        id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        sender: 'bot',
+        text: "Thanks! Our team will reach out shortly.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, confirm]);
+      setNeedsContact(false);
+      setPendingQuery(null);
+      updateUserData(info);
+    } catch (e) {
+      const errMsg: ChatMessage = {
+        id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        sender: 'bot',
+        text: 'Sorry—could not send your details right now. Please try again in a minute.',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errMsg]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
   const updateChatStepFromContent = (text: string) => {
     const lowerText = text.toLowerCase();
     if (chatStep === 'greeting') {
@@ -184,6 +295,8 @@ export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children })
   const resetChat = () => {
     setMessages([]);
     setUserData({});
+    setNeedsContact(false);
+    setPendingQuery(null);
     setChatStep('greeting');
   };
 
@@ -202,6 +315,8 @@ export const ChatBotProvider: React.FC<{ children: ReactNode }> = ({ children })
         updateUserData,
         resetChat,
         setChatStep,
+        needsContact,
+        submitContact,
       }}
     >
       {children}

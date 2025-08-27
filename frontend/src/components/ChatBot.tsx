@@ -96,10 +96,6 @@ const ChatBot: React.FC = () => {
               <h3 className="font-bold text-white">MetaGrow AI</h3>
             </div>
             <div className="flex items-center">
-              <div className="flex items-center mr-2 bg-slate-700 rounded-full px-2 py-1 text-xs">
-                <Sparkles className="text-yellow-400 w-3 h-3 mr-1" />
-                <span className="text-slate-200">Powered by Groq</span>
-              </div>
               <button
                 onClick={closeChat}
                 className="text-slate-400 hover:text-white transition-colors"

@@ -1,10 +1,5 @@
-// Import Cohere correctly with the new SDK
-const { CohereClient } = require('cohere-ai');
 
-// Initialize Cohere client
-const cohere = new CohereClient({
-  token: process.env.COHERE_API_KEY,
-});
+const { CohereClient } = require('cohere-ai');
 
 let lastCallAt = 0;
 const MIN_INTERVAL_MS = 1200;
@@ -23,10 +18,12 @@ class GeminiGenerator { // keep class name to avoid wider refactors
 
   buildPrompt(query, contexts) {
     const contextText = contexts.map((c, i) => `Source ${i + 1} (${c.metadata.route}):\n${c.content}`).join('\n\n');
-    return `You are MetaGrow AI for Metic Synergy. Answer ONLY from the provided CONTEXT. If not present, say you don't know and offer to connect support. Keep answers concise (1-3 sentences).\n\nCONTEXT:\n${contextText}\n\nQUESTION: ${query}\n\nANSWER:`;
+    return `You are MetaGrow AI, a helpful assistant for Metic Synergy digital marketing agency.\n\nIMPORTANT: Answer ONLY based on the provided CONTEXT. If the information is not in the context, say "I don't have that information in my context" and offer to connect them with support. Keep answers concise (1-3 sentences).\n\nCONTEXT:\n${contextText}\n\nUSER QUESTION: ${query}\n\nANSWER:`;
   }
 
   async generate(query, contexts) {
+    const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
+
     const prompt = this.buildPrompt(query, contexts);
     const maxRetries = 3;
     const baseDelayMs = 600;

@@ -83,11 +83,11 @@ const Home: React.FC = () => {
             {/* Simplified Progress Bar */}
             <div className="max-w-3xl mx-auto mb-10">
               <div className="h-1 bg-slate-700 rounded-full relative">
-                <div className="flex justify-between absolute w-full">
+                <div className="absolute inset-0 flex items-center justify-between w-full z-10">
                   {steps.map((_, index) => (
                     <div
                       key={index}
-                      className={`w-3 h-3 rounded-full ${index <= activeStep ? 'bg-blue-400' : 'bg-slate-600'}`}
+                      className={`relative w-3 h-3 rounded-full ${index <= activeStep ? 'bg-blue-400' : 'bg-slate-600'}`}
                       style={{ transform: 'translateX(-50%)' }}
                     >
                       <span className={`absolute -top-8 text-sm ${index <= activeStep ? 'text-blue-300' : 'text-slate-500'}`}>
@@ -97,7 +97,7 @@ const Home: React.FC = () => {
                   ))}
                 </div>
                 <div
-                  className="h-full bg-blue-500 rounded-full absolute"
+                  className="h-full bg-blue-500 rounded-full absolute z-0"
                   style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
                 ></div>
               </div>
