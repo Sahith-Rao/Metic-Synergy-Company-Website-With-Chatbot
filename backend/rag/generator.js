@@ -1,50 +1,66 @@
-
-const { CohereClient } = require('cohere-ai');
+const { CohereClient } = require("cohere-ai");
 
 let lastCallAt = 0;
-const MIN_INTERVAL_MS = 1200;
+const MIN_INTERVAL_MS = 1800; // pacing between calls
 
 async function rateLimitWait() {
   const now = Date.now();
   const elapsed = now - lastCallAt;
   if (elapsed < MIN_INTERVAL_MS) {
-    await new Promise(r => setTimeout(r, MIN_INTERVAL_MS - elapsed));
+    await new Promise((r) => setTimeout(r, MIN_INTERVAL_MS - elapsed));
   }
   lastCallAt = Date.now();
 }
 
-class GeminiGenerator { // keep class name to avoid wider refactors
+class GeminiGenerator {
   constructor() {}
 
+  // Build only the context block now
   buildPrompt(query, contexts) {
-    const contextText = contexts.map((c, i) => `Source ${i + 1} (${c.metadata.route}):\n${c.content}`).join('\n\n');
-    return `You are MetaGrow AI, a helpful assistant for Metic Synergy digital marketing agency.\n\nIMPORTANT: Answer ONLY based on the provided CONTEXT. If the information is not in the context, say "I don't have that information in my context" and offer to connect them with support. Keep answers concise (1-3 sentences).\n\nCONTEXT:\n${contextText}\n\nUSER QUESTION: ${query}\n\nANSWER:`;
+    const contextText = contexts
+      .map(
+        (c, i) => `Source ${i + 1} (${c.metadata.route}):\n${c.content}`
+      )
+      .join("\n\n");
+
+    return `CONTEXT:\n${contextText}\n\nUSER QUESTION: ${query}`;
   }
 
   async generate(query, contexts) {
     const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
 
-    const prompt = this.buildPrompt(query, contexts);
-    const maxRetries = 3;
-    const baseDelayMs = 600;
+    const systemPrompt = 'You are MetaGrow AI, a helpful assistant for Metic Synergy digital marketing agency. Be concise (1-3 sentences). Answer ONLY from the provided context. If missing, say "I don\'t have that information in my context" and offer to connect support.';
+    const userContent = this.buildPrompt(query, contexts);
+    const combinedMessage = `${systemPrompt}\n\n${userContent}`;
+
+    const maxRetries = 5;
+    const baseDelayMs = 800;
 
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         await rateLimitWait();
-        const res = await cohere.generate({
-          model: 'command-light',
-          prompt,
+        const res = await cohere.chat({
+          model: 'command-a-03-2025',
+          message: combinedMessage,
           maxTokens: 250,
           temperature: 0.2,
         });
-        return res.generations?.[0]?.text?.trim() || "I don't have that information in my context.";
+        const text = res.text || res.message;
+        return (text && String(text).trim()) || "I don't have that information in my context.";
       } catch (err) {
         const status = err?.statusCode || err?.status;
         const retryable = status === 429 || status >= 500;
         if (attempt < maxRetries - 1 && retryable) {
           const delay = baseDelayMs * Math.pow(2, attempt);
-          await new Promise(r => setTimeout(r, delay));
+          await new Promise((r) => setTimeout(r, delay));
           continue;
+        }
+        if (process.env.SHOW_MODEL_ERRORS === 'true') {
+          const details = {
+            status: status ?? null,
+            message: err?.message ?? 'Unknown error',
+          };
+          return `Model error: ${JSON.stringify(details)}`;
         }
         return "I'm at capacity right now. Please try again in a minute or share your contact details and I'll alert our team.";
       }
@@ -53,5 +69,3 @@ class GeminiGenerator { // keep class name to avoid wider refactors
 }
 
 module.exports = { GeminiGenerator };
-
-
